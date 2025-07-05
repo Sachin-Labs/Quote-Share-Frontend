@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Quotes from "./pages/Quotes";
 import Home from "./layouts/Home";
-import Terms from "./layouts/terms";
+import Terms from "./layouts/Terms";
 import Privacy from "./layouts/Privacy";
 import AppLayout from "./layouts/AppLayout";
 import "./app.css";
