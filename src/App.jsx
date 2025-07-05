@@ -9,7 +9,7 @@ import Home from "./layouts/Home";
 import Terms from "./layouts/Terms";
 import Privacy from "./layouts/Privacy";
 import AppLayout from "./layouts/AppLayout";
-import "./app.css";
+import "./App.css";
 
 const App = () => {
   return (
