@@ -8,17 +8,14 @@ const AlreadyLoggedInRedirect = ({ children }) => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    console.log("AlreadyLoggedInRedirect running - isLoggedIn:", isLoggedIn);
     const checkAuth = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}verify`, {
           withCredentials: true, 
         });
         if (res.status === 200) {
-          console.log("✅ Verified user:", res.data.user);
           setIsLoggedIn(true);
         } else {
-          console.error("❌ Verification failed:", err?.response?.data || err);
           setIsLoggedIn(false);
         }
       } catch (err) {
