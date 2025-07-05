@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link,useNavigate  } from "react-router";
 import React, { useState } from "react";
 import "../styles/auth.css";
 import axios from "axios";
@@ -13,6 +13,8 @@ const AuthPage = () => {
     otp: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -73,7 +75,7 @@ const AuthPage = () => {
         { withCredentials: true }
       );
       alert("Logged in successfully");
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
