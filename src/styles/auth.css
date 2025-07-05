@@ -1,0 +1,58 @@
+.login-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+}
+
+.toggle-container{
+    display: flex;
+    align-items: center;
+}
+
+.toggle-button{
+    background-color: transparent;    
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.login-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+.login-form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    
+}
+.terms-container{
+    display: flex;
+    align-items: center;
+}
+
+.terms-checkbox{
+    width: 20px;
+    height: 20px;
+    margin: 0px;
+    margin-right: 10px;
+    display: flex;
+    align-self: center;
+}
+
+.authButton{
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    height: 52px;
+    width: 350px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
