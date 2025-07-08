@@ -6,7 +6,7 @@ const TopNavbar = () => {
   return (
     <nav>
         <p className="logo"><span className="logo-quote">"</span>QuoteShare</p>
-      <ul className="nav-links">
+      {/* <ul className="nav-links">
         <li>
           <a  href='#features' className="link">Features</a>
         </li>
@@ -16,7 +16,7 @@ const TopNavbar = () => {
         <li>
           <a href="#community" className="link">Community</a>
         </li>
-      </ul>
+      </ul> */}
       <Link className="link link-button" to='/auth'>Sign In</Link>
     </nav>
   );

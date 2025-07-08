@@ -17,7 +17,6 @@ import "../styles/home.css";
 const HomePage = () => {
   return (
     <div className="home-container">
-
       <section className="top-grid">
         <div className="left-grid">
           <h1 className="headline headline-one">Share your thoughts.</h1>
@@ -43,8 +42,8 @@ const HomePage = () => {
             <div className="profile-card">
               <FaCircleUser />
               <div>
-                <h4>Sachin Balagam</h4>
-                <p>@sachinbalagam</p>
+                <h4>Roopa Sowmya</h4>
+                <p>@roopasowmya</p>
               </div>
             </div>
             <p>"The only way to do great work is to love what you do."</p>
@@ -67,7 +66,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
 
       <section id="features" className="second-grid">
         <h1 className="second-grid-heading">Everything you need to inspire</h1>
@@ -131,7 +129,6 @@ const HomePage = () => {
         </div>
       </section>
 
-
       <section id="extension" className="third-grid">
         <div className="third-grid-left">
           <h1>Experience quotes in every new tab</h1>
@@ -161,11 +158,32 @@ const HomePage = () => {
         </div>
         <div className="third-grid-right">
           <div className="tab-preview">
-            <div style={{height:'10px', width:'10px', backgroundColor:'red', borderRadius:'50%'}}></div>
-            <div style={{height:'10px', width:'10px', backgroundColor:'yellow', borderRadius:'50%'}}></div>
-            <div style={{height:'10px', width:'10px', backgroundColor:'green', borderRadius:'50%'}}></div>
-            <p style={{color:'#fff', fontWeight:'300px'}}>New Tab</p>
-            </div>
+            <div
+              style={{
+                height: "10px",
+                width: "10px",
+                backgroundColor: "red",
+                borderRadius: "50%",
+              }}
+            ></div>
+            <div
+              style={{
+                height: "10px",
+                width: "10px",
+                backgroundColor: "yellow",
+                borderRadius: "50%",
+              }}
+            ></div>
+            <div
+              style={{
+                height: "10px",
+                width: "10px",
+                backgroundColor: "green",
+                borderRadius: "50%",
+              }}
+            ></div>
+            <p style={{ color: "#fff", fontWeight: "300px" }}>New Tab</p>
+          </div>
           <div className="third-grid-right-main">
             <div
               className="icon-container"
@@ -175,26 +193,25 @@ const HomePage = () => {
             </div>
             <h3 className="user-name">ShivaKumar BR</h3>
             <p className="user-name">@shivakumar</p>
-             <h2 className="user-name review-text" style={{fontWeight: "300"}}>
+            <h2 className="user-name review-text" style={{ fontWeight: "300" }}>
               "Every moment is a fresh beginning."
             </h2>
             <div className="social-media-container">
               <ul className="social-media-icons">
                 <li>
-                  <FaXTwitter style={{color:'white'}}/>
+                  <FaXTwitter style={{ color: "white" }} />
                 </li>
                 <li>
-                  <FaInstagram style={{color:'white'}}/>
+                  <FaInstagram style={{ color: "white" }} />
                 </li>
                 <li>
-                  <FaLinkedinIn style={{color:'white'}}/>
+                  <FaLinkedinIn style={{ color: "white" }} />
                 </li>
               </ul>
-              </div>
+            </div>
           </div>
         </div>
       </section>
-
 
       <section className="second-grid">
         <h1 className="second-grid-heading">Loved by creators</h1>
@@ -280,8 +297,8 @@ const HomePage = () => {
                 <FaCircleUser style={{ color: "#fff" }} />
               </div>
               <div className="user-details">
-                <h3>Roopasowmya</h3>
-                <pre>@roopasowmya</pre>
+                <h3>M.B.V. Shiva</h3>
+                <pre>@mbvshiva</pre>
               </div>
             </div>
             <p className="review-text">
@@ -297,7 +314,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
 
       <section id="community" className="fourth-grid">
         <h1 className="fourth-grid-heading">Ready to inspire the world?</h1>

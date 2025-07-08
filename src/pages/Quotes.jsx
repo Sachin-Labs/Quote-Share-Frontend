@@ -1,4 +1,10 @@
-import { FaFacebook, FaInstagram, FaInfoCircle, FaEdit } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaInfoCircle,
+  FaEdit,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
 import { FaXTwitter } from "react-icons/fa6";
 
@@ -19,6 +25,7 @@ const Quotes = ({ mode }) => {
       instagram: "",
       twitter: "",
       linkedin: "",
+      website: "",
     },
   });
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -50,7 +57,9 @@ const Quotes = ({ mode }) => {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    if (["facebook", "instagram", "twitter", "linkedin"].includes(id)) {
+    if (
+      ["facebook", "instagram", "twitter", "linkedin", "website"].includes(id)
+    ) {
       setFormData((prev) => ({
         ...prev,
         socialLinks: {
@@ -237,6 +246,18 @@ const Quotes = ({ mode }) => {
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.instagram || ""}
+                />
+              </div>
+              <div className="social-input">
+                <FaLinkedinIn style={{ fontSize: "30px", color: "darkBlue" }} />
+                <input
+                  type="text"
+                  id="website"
+                  placeholder="website Profile URL"
+                  style={{ marginBottom: "0px" }}
+                  onChange={handleInputChange}
+                  disabled={isSubmitting}
+                  value={formData.socialLinks.website || ""}
                 />
               </div>
             </div>

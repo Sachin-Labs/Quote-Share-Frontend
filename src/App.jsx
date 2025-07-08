@@ -5,11 +5,13 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Quotes from "./pages/Quotes";
+import Admin from "./pages/Admin";
 import Home from "./layouts/Home";
 import Terms from "./layouts/Terms";
 import Privacy from "./layouts/Privacy";
 import AppLayout from "./layouts/AppLayout";
 import "./App.css";
+import RequireAdmin from "./protectedRoute/RequireAdmin";
 
 const App = () => {
   return (
@@ -65,6 +67,18 @@ const App = () => {
               <AppLayout>
                 <Quotes mode="edit"/>
               </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <RequireAdmin>
+              <AppLayout>
+                <Admin/>
+              </AppLayout>
+              </RequireAdmin>
             </ProtectedRoute>
           }
         />
