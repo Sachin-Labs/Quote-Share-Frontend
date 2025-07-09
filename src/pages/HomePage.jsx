@@ -13,6 +13,7 @@ import {
 import { HiUserAdd } from "react-icons/hi";
 import { IoShareSocial } from "react-icons/io5";
 import "../styles/home.css";
+import { Link } from "react-router";
 
 const HomePage = () => {
   return (
@@ -28,8 +29,10 @@ const HomePage = () => {
           </p>
           <div className="button-container">
             <button className="button get-started-button">
+               <Link to='/auth' style={{textDecoration:"none"}}>
               <FaRocket style={{ marginRight: "10px" }} />
               Get Started
+              </Link>
             </button>
             <button className="button install-extension-button">
               <FaDownload style={{ marginRight: "10px" }} />
@@ -324,8 +327,10 @@ const HomePage = () => {
         </p>
         <div className="button-container">
           <button className="get-started-button button">
+            <Link to='/auth' style={{textDecoration:"none"}}>
             <HiUserAdd style={{ marginRight: "10px" }} />
             Create Account
+            </Link>
           </button>
           <button className="install-extension-button button">
             <FaDownload style={{ marginRight: "10px" }} />

@@ -12,6 +12,7 @@ import Privacy from "./layouts/Privacy";
 import AppLayout from "./layouts/AppLayout";
 import "./App.css";
 import RequireAdmin from "./protectedRoute/RequireAdmin";
+import ContributionLayout from "./layouts/ContributionLayout";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/terms" element={<Terms />} />
         <Route exact path="/privacy" element={<Privacy />} />
+        <Route exact path="/contributions" element={<ContributionLayout />} />
         <Route
           exact
           path="/auth"
@@ -55,17 +57,17 @@ const App = () => {
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Quotes mode="create"/>
+                <Quotes mode="create" />
               </AppLayout>
             </ProtectedRoute>
           }
         />
-         <Route
+        <Route
           path="/quote/edit/:id"
           element={
             <ProtectedRoute>
               <AppLayout>
-                <Quotes mode="edit"/>
+                <Quotes mode="edit" />
               </AppLayout>
             </ProtectedRoute>
           }
@@ -75,9 +77,9 @@ const App = () => {
           element={
             <ProtectedRoute>
               <RequireAdmin>
-              <AppLayout>
-                <Admin/>
-              </AppLayout>
+                <AppLayout>
+                  <Admin />
+                </AppLayout>
               </RequireAdmin>
             </ProtectedRoute>
           }

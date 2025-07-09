@@ -12,11 +12,15 @@ const socialIcons = {
   linkedin: "LinkedIn.svg",
 };
 
+
+ 
+
 const Admin = () => {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const quotesData = useSelector((state) => state.quote.quotes);
+   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchQuotes = async () => {
     try {

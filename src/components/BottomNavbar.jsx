@@ -34,6 +34,11 @@ const BottomNavbar = () => {
                   Terms and Conditions
                 </Link>
               </li>
+              <li>
+                <Link to="/contributions" className="bottom-link">
+                  Contributions
+                </Link>
+              </li>
             </ul>
           </div>
           <div>

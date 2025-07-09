@@ -1,12 +1,12 @@
-import { Link,useNavigate  } from "react-router";
+import { Link, useNavigate } from "react-router";
 import React, { useState } from "react";
 import "../styles/auth.css";
 import axios from "axios";
 
-
 const AuthPage = () => {
+  const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
     emailId: "",
@@ -24,17 +24,23 @@ const AuthPage = () => {
 
   const handleSignupStep1 = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}requestOtp`, { emailId: formData.emailId });
+      await axios.post(`${API_BASE_URL}requestOtp`, {
+        emailId: formData.emailId,
+      });
       alert("OTP sent to email");
       setStep(2);
     } catch (err) {
       alert(err.response?.data?.message || "Error sending OTP");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(`${API_BASE_URL}verifyOtp`, {
         emailId: formData.emailId,
@@ -44,11 +50,14 @@ const AuthPage = () => {
       setStep(3);
     } catch (err) {
       alert(err.response?.data?.message || "OTP verification failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleFinalRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(`${API_BASE_URL}register`, {
         emailId: formData.emailId,
@@ -56,15 +65,18 @@ const AuthPage = () => {
         password: formData.password,
       });
       alert("Registered successfully");
-      setIsLogin(true); 
+      setIsLogin(true);
       setStep(1);
     } catch (err) {
       alert(err.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await axios.post(
         `${API_BASE_URL}login`,
@@ -78,6 +90,8 @@ const AuthPage = () => {
       navigate("/dashboard");
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -182,19 +196,21 @@ const AuthPage = () => {
               required
             />
             <label htmlFor="terms">
-              I agree to the 
+              I agree to the
               <Link to="/terms" className="link">
-                 terms
+                terms
               </Link>
-              and 
+              and
               <Link to="/privacy" className="link">
                 privacy policy
               </Link>
             </label>
           </div>
 
-          <button type="submit" className="authButton">
-            {isLogin
+          <button type="submit" className="authButton" disabled={loading}>
+            {loading
+              ? "Please wait..."
+              : isLogin
               ? "Login"
               : step === 1
               ? "Send OTP"

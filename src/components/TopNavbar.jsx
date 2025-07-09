@@ -5,7 +5,7 @@ import '../styles/navbar.css';
 const TopNavbar = () => {
   return (
     <nav>
-        <p className="logo"><span className="logo-quote">"</span>QuoteShare</p>
+        <a className="logo" href="/"><span className="logo-quote">"</span>QuoteShare</a>
       {/* <ul className="nav-links">
         <li>
           <a  href='#features' className="link">Features</a>

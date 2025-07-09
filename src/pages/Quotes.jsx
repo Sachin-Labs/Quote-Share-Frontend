@@ -253,7 +253,7 @@ const Quotes = ({ mode }) => {
                 <input
                   type="text"
                   id="linkedin"
-                  placeholder="website Profile URL"
+                  placeholder="linkedin Profile URL"
                   style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
@@ -281,7 +281,7 @@ const Quotes = ({ mode }) => {
                 <input
                   type="text"
                   id="website"
-                  placeholder="linkedin Profile URL"
+                  placeholder="website Profile URL"
                   style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
