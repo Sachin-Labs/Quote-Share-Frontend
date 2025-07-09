@@ -252,12 +252,12 @@ const Quotes = ({ mode }) => {
                 <FaLinkedinIn style={{ fontSize: "30px", color: "darkBlue" }} />
                 <input
                   type="text"
-                  id="website"
+                  id="linkedin"
                   placeholder="website Profile URL"
                   style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.website || ""}
+                  value={formData.socialLinks.linkedin || ""}
                 />
               </div>
             </div>
@@ -280,12 +280,12 @@ const Quotes = ({ mode }) => {
                 />
                 <input
                   type="text"
-                  id="linkedin"
+                  id="website"
                   placeholder="linkedin Profile URL"
                   style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.linkedin || ""}
+                  value={formData.socialLinks.website || ""}
                 />
               </div>
             </div>

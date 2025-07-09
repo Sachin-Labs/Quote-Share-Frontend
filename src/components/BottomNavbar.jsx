@@ -54,7 +54,7 @@ const BottomNavbar = () => {
         </div>
       </div>
       <hr className="h-line" />
-      <p className="cp-text">©2025 Sachin Balagam. All rights reserved.</p>
+      <p className="cp-text">©2025 <a href="https://www.linkedin.com/in/sachinbalagam/">Sachin Balagam.</a> All rights reserved.</p>
     </div>
   );
 };

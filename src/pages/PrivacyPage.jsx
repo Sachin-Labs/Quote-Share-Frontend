@@ -4,8 +4,8 @@ const PrivacyPage = () => {
   return (
     <div className="terms-conditions-container">
       <h1>Privacy Policy</h1>
-      <p>Effective Date: [Insert Date]</p>
-      <p>Application Name: [Your App Name]</p>
+      <p>Effective Date: 10th July 2025</p>
+      <p>Application Name: Quote Share</p>
       <p>
         Your privacy is important to us. This policy describes how we collect,
         use, and protect your personal information.
@@ -56,7 +56,7 @@ const PrivacyPage = () => {
         <li>Update or delete your account data</li>
         <li>Request access to the information we hold about you</li>
       </ol>
-      <p>Contact us at [support@yourapp.com] for such requests.</p>
+      <p>Contact us at support@quoteshare.com for such requests.</p>
       <h3>7. Third-Party Links</h3>
       <p>
         Our platform may contain links to other websites. We are not responsible
@@ -70,7 +70,7 @@ const PrivacyPage = () => {
       <h3>9. Contact Us</h3>
       <p>
         For questions or concerns about your data, email us at
-        [support@yourapp.com].
+        support@quoteshare.com.
       </p>
     </div>
   );
