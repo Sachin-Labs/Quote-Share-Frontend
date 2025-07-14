@@ -13,6 +13,7 @@ import AppLayout from "./layouts/AppLayout";
 import "./App.css";
 import RequireAdmin from "./protectedRoute/RequireAdmin";
 import ContributionLayout from "./layouts/ContributionLayout";
+import Contributions from "./pages/Contributions";
 
 const App = () => {
   return (
@@ -48,6 +49,16 @@ const App = () => {
             <ProtectedRoute>
               <AppLayout>
                 <Settings />
+              </AppLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/story"
+          element={
+            <ProtectedRoute>
+              <AppLayout>
+                 <Contributions/>
               </AppLayout>
             </ProtectedRoute>
           }

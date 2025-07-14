@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setQuotes } from "../slice/quoteSlice";
 import "../styles/admin.css";
-import { API_BASE_URL } from "../utils/constants";
 
 const socialIcons = {
   facebook: "fb.svg",
@@ -98,7 +97,7 @@ const Admin = () => {
                   />
                   <div className="quote-details">
                     <h3>{quote.author}</h3>
-                    <p className="name-and-created-at">{quote.createdBy}</p>
+                    <p className="name-and-created-at">{quote.caption}</p>
                   </div>
                 </div>
 

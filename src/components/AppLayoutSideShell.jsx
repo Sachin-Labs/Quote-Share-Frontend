@@ -1,9 +1,21 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const AppLayoutSideShell = () => {
   const isAdmin = useSelector((state) => state.user?.user?.role === "admin");
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      await axios(`${API_BASE_URL}logout`, { withCredentials: true });
+      navigate("/auth");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   return (
     <div className="applayout-side-shell">
@@ -27,6 +39,15 @@ const AppLayoutSideShell = () => {
         </NavLink>
 
         <NavLink
+          to="/story"
+          className={({ isActive }) =>
+            isActive ? "applayout-link active" : "applayout-link"
+          }
+        >
+          Story
+        </NavLink>
+
+        <NavLink
           to="/settings"
           className={({ isActive }) =>
             isActive ? "applayout-link active" : "applayout-link"
@@ -46,6 +67,9 @@ const AppLayoutSideShell = () => {
           </NavLink>
         )}
       </div>
+      <button className="logout-button" onClick={logout}>
+        Logout
+      </button>
     </div>
   );
 };

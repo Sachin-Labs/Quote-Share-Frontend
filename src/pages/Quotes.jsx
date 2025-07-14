@@ -10,6 +10,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 import { BsGlobeCentralSouthAsia } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
+import ImageGalleryModal from "../components/ImageGalleryModal";
 import axios from "axios";
 import "../styles/quotes.css";
 import { useNavigate, useParams } from "react-router";
@@ -29,9 +30,9 @@ const Quotes = ({ mode }) => {
     },
   });
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const isEditMode = mode === "edit";
@@ -72,35 +73,25 @@ const Quotes = ({ mode }) => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.size > 1 * 1024 * 1024) {
-      alert("File size exceeds 1MB limit.");
-      return;
-    }
-    const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
-    if (!allowedTypes.includes(file.type)) {
-      alert("Only JPG, JPEG, and PNG files are allowed.");
-      return;
-    }
-    if (file) {
-      setImageFile(file);
-      setImageUrl(null);
-    }
-    console.log(URL.createObjectURL(file));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const payload = new FormData();
-    payload.append("quote", formData.quote);
-    payload.append("author", formData.author);
-    payload.append("caption", formData.caption);
-    payload.append("image", imageFile);
-    payload.append("socialLinks", JSON.stringify(formData.socialLinks));
+
+    if (!imageUrl) {
+      alert("Please select an image before submitting.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
+      const payload = {
+        quote: formData.quote,
+        author: formData.author,
+        caption: formData.caption,
+        imageUrl: imageUrl,
+        socialLinks: formData.socialLinks,
+      };
+
       const url = isEditMode
         ? `${API_BASE_URL}quote/${id}`
         : `${API_BASE_URL}quote`;
@@ -111,7 +102,6 @@ const Quotes = ({ mode }) => {
         method,
         url,
         data: payload,
-        headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
 
@@ -120,9 +110,14 @@ const Quotes = ({ mode }) => {
         quote: "",
         author: "",
         caption: "",
-        socialLinks: { facebook: "", instagram: "", twitter: "", linkedin: "" },
+        socialLinks: {
+          facebook: "",
+          instagram: "",
+          twitter: "",
+          linkedin: "",
+          website: "",
+        },
       });
-      setImageFile(null);
       setImageUrl(null);
     } catch (error) {
       alert(error?.response?.data?.message || "Error submitting quote");
@@ -185,7 +180,7 @@ const Quotes = ({ mode }) => {
               />
             </div>
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="image" className="image-upload-wrapper">
               <input
                 type="file"
@@ -218,6 +213,34 @@ const Quotes = ({ mode }) => {
                 </div>
               )}
             </label>
+          </div> */}
+          <div>
+            <div
+              className="image-preview-wrapper"
+              onClick={() => setShowModal(true)}
+              style={{ cursor: "pointer" }}
+            >
+              {imageUrl ? (
+                <div className="image-hover-container">
+                  <img
+                    src={imageUrl}
+                    alt="Selected"
+                    className="image-preview"
+                  />
+                  <div className="image-hover-overlay">
+                    <FaEdit size={20} />
+                  </div>
+                </div>
+              ) : (
+                <div className="upload-placeholder">Click to upload</div>
+              )}
+            </div>
+            {showModal && (
+              <ImageGalleryModal
+                onClose={() => setShowModal(false)}
+                onSelect={(url) => setImageUrl(url)}
+              />
+            )}
           </div>
           <label htmlFor="social" className="label">
             Social Media Links
