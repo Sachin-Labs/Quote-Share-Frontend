@@ -47,7 +47,7 @@ const Contributions = () => {
         <div className="section-paragraph">
           Build your personal brand while spreading wisdom.
         </div>
-        <a href="https://www.quoteshare.work.gd/auth" className="contributors-button">Submit Your Quote</a>
+        {/* <a href="https://www.quoteshare.work.gd/auth" className="contributors-button">Submit Your Quote</a> */}
       </div>
 
       <div className="contributors-section">
@@ -83,7 +83,7 @@ const Contributions = () => {
         <div className="contributors-section">
         {/* <div className="section-heading">Help Me Upgrade This Revenge Project</div> */}
         <div className="contributors-note">
-          It takes 24–48 hours for your name to appear here after contributing.
+          It takes 48-72 hours for your name to appear here after contributing.
         </div>
         <div className="section-paragraph">
           List of Contributors :-

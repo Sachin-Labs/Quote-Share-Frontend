@@ -13,7 +13,8 @@ const AppLayoutSideShell = () => {
       await axios(`${API_BASE_URL}logout`, { withCredentials: true });
       navigate("/auth");
     } catch (e) {
-      console.log(e.message);
+      // console.log(e.message);
+      alert("Something went error")
     }
   };
 

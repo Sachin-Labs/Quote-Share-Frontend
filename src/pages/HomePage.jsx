@@ -29,14 +29,21 @@ const HomePage = () => {
           </p>
           <div className="button-container">
             <button className="button get-started-button">
-               <Link to='/auth' style={{textDecoration:"none"}}>
-              <FaRocket style={{ marginRight: "10px" }} />
-              Get Started
+              <Link to="/auth" style={{ textDecoration: "none" }}>
+                <FaRocket style={{ marginRight: "10px" }} />
+                Get Started
               </Link>
             </button>
             <button className="button install-extension-button">
-              <FaDownload style={{ marginRight: "10px" }} />
-              Install Extension
+              <a
+                href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: "none" }}
+              >
+                <FaDownload style={{ marginRight: "10px" }} />
+                Install Extension
+              </a>
             </button>
           </div>
         </div>
@@ -157,7 +164,16 @@ const HomePage = () => {
               One-click installation
             </li>
           </ul>
-          <button className="third-grid-button">Add to chrome</button>
+          <button className="third-grid-button">
+            <a
+              href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              Add to chrome
+            </a>
+          </button>
         </div>
         <div className="third-grid-right">
           <div className="tab-preview">
@@ -327,14 +343,21 @@ const HomePage = () => {
         </p>
         <div className="button-container">
           <button className="get-started-button button">
-            <Link to='/auth' style={{textDecoration:"none"}}>
-            <HiUserAdd style={{ marginRight: "10px" }} />
-            Create Account
+            <Link to="/auth" style={{ textDecoration: "none" }}>
+              <HiUserAdd style={{ marginRight: "10px" }} />
+              Create Account
             </Link>
           </button>
           <button className="install-extension-button button">
-            <FaDownload style={{ marginRight: "10px" }} />
-            Install Extension
+            <a
+              href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              <FaDownload style={{ marginRight: "10px" }} />
+              Install Extension
+            </a>
           </button>
         </div>
       </section>

@@ -49,7 +49,7 @@ const ImageGalleryModal = ({ onClose, onSelect }) => {
       });
       await fetchImages();
     } catch (err) {
-      alert("Upload failed");
+      alert(err.response?.data?.message || "Image upload failed.");
     } finally {
       setUploading(false);
     }

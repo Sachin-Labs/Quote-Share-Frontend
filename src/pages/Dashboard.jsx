@@ -118,36 +118,50 @@ const Dashboard = () => {
             quotesData.map((quote) => (
               <li key={quote.id} className="quote-item">
                 <div className="quote-top-card">
-
-                
-                <div className="quote-header">
-                  <img
-                    src={quote.imageUrl}
-                    alt="profile"
-                    className="profile-pic"
-                  />
-                  <div className="quote-details">
-                    <h3>{quote.author}</h3>
-                   <p className="name-and-created-at">{quote.createdBy}</p>
+                  <div className="quote-header">
+                    <img
+                      src={quote.imageUrl}
+                      alt="profile"
+                      className="profile-pic"
+                    />
+                    <div className="quote-details">
+                      <h3>{quote.author}</h3>
+                      <p className="name-and-created-at">{quote.caption}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="status-and-edit">
-                <span className={`review ${quote.status}`} >{quote.status}</span>
-                <Link className="edit-button" to={`/quote/edit/${quote.id}`}>Edit</Link>
-                </div>
+                  <div className="status-and-edit">
+                    <div className="inner-status-and-edit">
+                    <span className={`review ${quote.status}`}>
+                      {quote.status}
+                    </span>
+                    {quote.status !== "approved" && (
+                      <Link
+                        className="edit-button"
+                        to={`/quote/edit/${quote.id}`}
+                      >
+                        Edit
+                      </Link>
+                    )}
+                    </div>
+                    {(quote.adminComment && quote.status === "rejected") && (
+                      <p className="admin-para">
+                        Reason for Rejection: <span className="admin-comment">{quote.adminComment}</span>
+                      </p>
+                    )}
+                  </div>
                 </div>
                 <p className="quote-text">"{quote.quote}"</p>
                 <div className="quote-bottom-card">
                   <p className="id">ID: {quote.id}</p>
-                   <p className="name-and-created-at">Created At: 
-                       {new Date(quote.createdAt).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </p>
+                  <p className="name-and-created-at">
+                    Created At:
+                    {new Date(quote.createdAt).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
                 </div>
-                
               </li>
             ))
           ) : (

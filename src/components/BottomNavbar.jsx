@@ -43,7 +43,7 @@ const BottomNavbar = () => {
           </div>
           <div>
             <h4>Contact Us</h4>
-            <p>Email: support@tech.com</p>
+            {/* <p>Email: balagamsachin337@gmail.com</p> */}
             <ul className="nav-links">
               <li>
                 <FaXTwitter/>

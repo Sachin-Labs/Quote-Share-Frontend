@@ -116,11 +116,18 @@
   font-style: italic;
 }
 
-.status-and-edit{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+.status-and-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.inner-status-and-edit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .edit-button {
@@ -130,4 +137,13 @@
   border-radius: 5px;
   padding: 3px 15px;
   cursor: pointer;
+  text-decoration: none;
+}
+.admin-para {
+  width: 250px;
+}
+.admin-comment {
+  font-size: 0.875rem;
+  color: red;
+  margin-top: 4px;
 }

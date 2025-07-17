@@ -4,7 +4,7 @@ const TermsConditions = () => {
   return (
     <div className="terms-conditions-container">
       <h1>Terms and Conditions</h1>
-      <p>Effective Date: 10th July 2025</p>
+      <p>Effective Date: 18th July 2025</p>
       <p>Application Name: Quote Share</p>
       <p>
         Welcome to Quote Share! By accessing or using our platform

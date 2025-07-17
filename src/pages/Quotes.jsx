@@ -44,7 +44,7 @@ const Quotes = ({ mode }) => {
         .then((res) => {
           const { quote, author, caption, socialLinks, imageUrl } =
             res.data.data;
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFormData({ quote, author, caption, socialLinks });
           setImageUrl(imageUrl);
         })
