@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../styles/auth.css";
 import axios from "axios";
 
 const AuthPage = () => {
   const [loading, setLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [resendTimer, setResendTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     name: "",
@@ -17,6 +19,39 @@ const AuthPage = () => {
   const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    let interval;
+    if (!canResend && step === 2) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(interval);
+            setCanResend(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [canResend, step]);
+
+  const handleResendOtp = async () => {
+    setLoading(true);
+    try {
+      await axios.post(`${API_BASE_URL}requestOtp`, {
+        emailId: formData.emailId,
+      });
+      alert("OTP resent to email");
+      setResendTimer(60);
+      setCanResend(false);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to resend OTP");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -68,7 +103,7 @@ const AuthPage = () => {
       setIsLogin(true);
       setStep(1);
     } catch (err) {
-      alert(err.response?.data?.message || "Registration failed");
+      alert(err.response.data || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -147,6 +182,7 @@ const AuthPage = () => {
             value={formData.emailId}
             onChange={handleChange}
             required
+            readOnly={!isLogin && step > 1}
           />
 
           {isLogin && (
@@ -171,6 +207,16 @@ const AuthPage = () => {
                 onChange={handleChange}
                 required
               />
+              <div className="resend-container">
+                <button
+                  type="button"
+                  onClick={handleResendOtp}
+                  disabled={!canResend || loading}
+                  className="resend-button"
+                >
+                  {canResend ? "Resend OTP" : `Resend in ${resendTimer}s`}
+                </button>
+              </div>
             </>
           )}
 
