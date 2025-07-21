@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/auth.css";
 import axios from "axios";
 
 const AuthPage = () => {
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
+  const [mode, setMode] = useState("login"); // "login" | "signup" | "forgot"
   const [resendTimer, setResendTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [step, setStep] = useState(1);
@@ -17,12 +17,11 @@ const AuthPage = () => {
   });
 
   const navigate = useNavigate();
-
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     let interval;
-    if (!canResend && step === 2) {
+    if (!canResend && step === 2 && mode !== "login") {
       interval = setInterval(() => {
         setResendTimer((prev) => {
           if (prev <= 1) {
@@ -35,7 +34,7 @@ const AuthPage = () => {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [canResend, step]);
+  }, [canResend, step, mode]);
 
   const handleResendOtp = async () => {
     setLoading(true);
@@ -100,7 +99,7 @@ const AuthPage = () => {
         password: formData.password,
       });
       alert("Registered successfully");
-      setIsLogin(true);
+      setMode("login");
       setStep(1);
     } catch (err) {
       alert(err.response.data || "Registration failed");
@@ -130,41 +129,126 @@ const AuthPage = () => {
     }
   };
 
+  const handleForgotStep1 = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post(`${API_BASE_URL}requestForgotOtp`, {
+        emailId: formData.emailId,
+      });
+      alert("OTP sent to email");
+      setStep(2);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to send OTP");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgotStep2 = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post(`${API_BASE_URL}verifyForgotOtp`, {
+        emailId: formData.emailId,
+        otp: formData.otp,
+      });
+      alert("OTP verified");
+      setStep(3);
+    } catch (err) {
+      alert(err.response?.data?.message || "OTP verification failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      await axios.post(`${API_BASE_URL}resetPassword`, {
+        emailId: formData.emailId,
+        newPassword: formData.password,
+      });
+      alert("Password reset successfully");
+      setMode("login");
+      setStep(1);
+      setFormData({ name: "", emailId: "", otp: "", password: "" });
+    } catch (err) {
+      alert(err.response?.data?.message || "Password reset failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getSubmitHandler = () => {
+    if (mode === "login") return handleLogin;
+    if (mode === "signup") {
+      if (step === 1) return handleSignupStep1;
+      if (step === 2) return handleVerifyOtp;
+      return handleFinalRegister;
+    }
+    if (mode === "forgot") {
+      if (step === 1) return handleForgotStep1;
+      if (step === 2) return handleForgotStep2;
+      return handleResetPassword;
+    }
+  };
+
   return (
     <div className="login-container">
       <img src="/LoginSideImage.jpg" alt="side-image" />
       <div className="login-card">
-        <h1>{isLogin ? "Welcome Back" : "Create an account"}</h1>
+        <h1>
+          {mode === "login"
+            ? "Welcome Back"
+            : mode === "signup"
+            ? "Create an account"
+            : "Reset Password"}
+        </h1>
 
         <div className="toggle-container">
-          <p>
-            {isLogin ? "Don't have an account?" : "Already have an account?"}
-          </p>
-          <button
-            className="toggle-button"
-            onClick={() => {
-              setIsLogin(!isLogin);
-              setStep(1);
-              setFormData({ name: "", emailId: "", otp: "", password: "" });
-            }}
-          >
-            {isLogin ? "Sign Up" : "Sign In"}
-          </button>
+          {mode !== "forgot" && (
+            <>
+              <p>
+                {mode === "login"
+                  ? "Don't have an account?"
+                  : "Already have an account?"}
+              </p>
+              <button
+                className="toggle-button"
+                onClick={() => {
+                  setMode(mode === "login" ? "signup" : "login");
+                  setStep(1);
+                  setFormData({ name: "", emailId: "", otp: "", password: "" });
+                }}
+              >
+                {mode === "login" ? "Sign Up" : "Sign In"}
+              </button>
+            </>
+          )}
+
+          {mode === "forgot" && (
+            <button
+              className="toggle-button"
+              onClick={() => {
+                setMode("login");
+                setStep(1);
+                setFormData({
+                  name: "",
+                  emailId: "",
+                  otp: "",
+                  password: "",
+                });
+              }}
+            >
+              Back to Login
+            </button>
+          )}
         </div>
 
-        <form
-          className="login-form"
-          onSubmit={
-            isLogin
-              ? handleLogin
-              : step === 1
-              ? handleSignupStep1
-              : step === 2
-              ? handleVerifyOtp
-              : handleFinalRegister
-          }
-        >
-          {!isLogin && step === 1 && (
+        <form className="login-form" onSubmit={getSubmitHandler()}>
+          {mode === "signup" && step === 1 && (
             <>
               <label>Name</label>
               <input
@@ -182,10 +266,10 @@ const AuthPage = () => {
             value={formData.emailId}
             onChange={handleChange}
             required
-            readOnly={!isLogin && step > 1}
+            readOnly={mode !== "login" && step > 1}
           />
 
-          {isLogin && (
+          {mode === "login" && (
             <>
               <label>Password</label>
               <input
@@ -198,7 +282,7 @@ const AuthPage = () => {
             </>
           )}
 
-          {!isLogin && step === 2 && (
+          {mode !== "login" && step === 2 && (
             <>
               <label>Enter OTP</label>
               <input
@@ -220,9 +304,11 @@ const AuthPage = () => {
             </>
           )}
 
-          {!isLogin && step === 3 && (
+          {mode !== "login" && step === 3 && (
             <>
-              <label>Create Password</label>
+              <label>
+                {mode === "signup" ? "Create Password" : "New Password"}
+              </label>
               <input
                 type="password"
                 name="password"
@@ -233,36 +319,58 @@ const AuthPage = () => {
             </>
           )}
 
-          <div className="terms-container">
-            <input
-              type="checkbox"
-              id="terms"
-              name="terms"
-              className="terms-checkbox"
-              required
-            />
-            <label htmlFor="terms">
-              I agree to the
-              <Link to="/terms" className="link">
-                terms
-              </Link>
-              and
-              <Link to="/privacy" className="link">
-                privacy policy
-              </Link>
-            </label>
-          </div>
+          {mode === "signup" && (
+            <div className="terms-container">
+              <input
+                type="checkbox"
+                id="terms"
+                name="terms"
+                className="terms-checkbox"
+                required
+              />
+              <label htmlFor="terms">
+                <span>I agree to the </span>
+                <Link to="/terms" className="link">
+                  terms
+                </Link>
+                <span> and </span>
+                <Link to="/privacy" className="link">
+                  privacy policy
+                </Link>
+              </label>
+            </div>
+          )}
+
+          {mode === "login" && (
+            <button
+              className="toggle-button"
+              onClick={() => {
+                setMode("forgot");
+                setStep(1);
+                setFormData({
+                  name: "",
+                  emailId: "",
+                  otp: "",
+                  password: "",
+                });
+              }}
+            >
+              Forgot Password?
+            </button>
+          )}
 
           <button type="submit" className="authButton" disabled={loading}>
             {loading
               ? "Please wait..."
-              : isLogin
+              : mode === "login"
               ? "Login"
               : step === 1
               ? "Send OTP"
               : step === 2
               ? "Verify OTP"
-              : "Create Account"}
+              : mode === "signup"
+              ? "Create Account"
+              : "Reset Password"}
           </button>
         </form>
       </div>
