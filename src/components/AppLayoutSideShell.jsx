@@ -39,14 +39,14 @@ const AppLayoutSideShell = () => {
           Quotes
         </NavLink>
 
-        <NavLink
+        {/* <NavLink
           to="/story"
           className={({ isActive }) =>
             isActive ? "applayout-link active" : "applayout-link"
           }
         >
           Story
-        </NavLink>
+        </NavLink> */}
 
         <NavLink
           to="/settings"
