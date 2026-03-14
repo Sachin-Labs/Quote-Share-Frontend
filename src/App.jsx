@@ -14,10 +14,12 @@ import "./App.css";
 import RequireAdmin from "./protectedRoute/RequireAdmin";
 import ContributionLayout from "./layouts/ContributionLayout";
 import Contributions from "./pages/Contributions";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/terms" element={<Terms />} />

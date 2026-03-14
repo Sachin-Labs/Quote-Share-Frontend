@@ -232,7 +232,10 @@ const Quotes = ({ mode }) => {
                   </div>
                 </div>
               ) : (
-                <div className="upload-placeholder">Click to upload</div>
+                <div className="upload-placeholder">
+                  <FaEdit size={20} style={{ marginBottom: '8px', opacity: 0.5 }} />
+                  <span>Upload Profile Picture</span>
+                </div>
               )}
             </div>
             {showModal && (
@@ -248,36 +251,33 @@ const Quotes = ({ mode }) => {
           <div className="author-and-caption-container">
             <div className="form-group">
               <div className="social-input">
-                <FaFacebook style={{ fontSize: "30px", color: "blue" }} />
+                <FaFacebook className="social-icon icon-facebook" />
                 <input
                   type="text"
                   id="facebook"
                   placeholder="Facebook Profile URL"
-                  style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.facebook || ""}
                 />
               </div>
               <div className="social-input">
-                <FaInstagram style={{ fontSize: "30px", color: "#e56969" }} />
+                <FaInstagram className="social-icon icon-instagram" />
                 <input
                   type="text"
                   id="instagram"
                   placeholder="Instagram Profile URL"
-                  style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.instagram || ""}
                 />
               </div>
               <div className="social-input">
-                <FaLinkedinIn style={{ fontSize: "30px", color: "darkBlue" }} />
+                <FaLinkedinIn className="social-icon icon-linkedin" />
                 <input
                   type="text"
                   id="linkedin"
-                  placeholder="linkedin Profile URL"
-                  style={{ marginBottom: "0px" }}
+                  placeholder="LinkedIn Profile URL"
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.linkedin || ""}
@@ -286,26 +286,22 @@ const Quotes = ({ mode }) => {
             </div>
             <div className="form-group">
               <div className="social-input">
-                <FaXTwitter style={{ fontSize: "30px", color: "black" }} />
+                <FaXTwitter className="social-icon icon-twitter" />
                 <input
                   type="text"
                   id="twitter"
                   placeholder="Twitter Profile URL"
-                  style={{ marginBottom: "0px" }}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.twitter || ""}
                 />
               </div>
               <div className="social-input">
-                <BsGlobeCentralSouthAsia
-                  style={{ fontSize: "30px", color: "green" }}
-                />
+                <BsGlobeCentralSouthAsia className="social-icon icon-website" />
                 <input
                   type="text"
                   id="website"
-                  placeholder="website Profile URL"
-                  style={{ marginBottom: "0px" }}
+                  placeholder="Website Profile URL"
                   onChange={handleInputChange}
                   disabled={isSubmitting}
                   value={formData.socialLinks.website || ""}
@@ -324,8 +320,8 @@ const Quotes = ({ mode }) => {
                   ? "Updating..."
                   : "Submitting..."
                 : mode === "edit"
-                ? "Update Quote"
-                : "Submit Quote"}
+                  ? "Update Quote"
+                  : "Submit Quote"}
             </button>
           </div>
         </form>
