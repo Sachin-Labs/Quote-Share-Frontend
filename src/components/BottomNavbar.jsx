@@ -1,14 +1,15 @@
-import React from "react";
-import { FaLinkedinIn, FaInstagram } from "react-icons/fa";
-import { FaXTwitter} from "react-icons/fa6";
 import { Link } from "react-router";
+import { FaQuoteLeft } from "react-icons/fa";
 
 const BottomNavbar = () => {
   return (
     <div className="bottom-container">
       <div className="bottom-first-card">
         <div className="bottom-logo-card">
-          <p className="logo"><span className="logo-quote">"</span>QuoteShare</p>
+          <p className="logo">
+            <FaQuoteLeft className="logo-icon" />
+            QuoteShare
+          </p>
           <p>
             Share inspiration, spread positivity, and motivate others with beautiful quotes.
 
@@ -39,21 +40,6 @@ const BottomNavbar = () => {
                   Contributions
                 </Link>
               </li> */}
-            </ul>
-          </div>
-          <div>
-            <h4>Contact Us</h4>
-            {/* <p>Email: balagamsachin337@gmail.com</p> */}
-            <ul className="nav-links">
-              <li>
-                <FaXTwitter/>
-              </li>
-              <li>
-                <FaLinkedinIn/>
-              </li>
-              <li>
-                <FaInstagram />
-              </li>
             </ul>
           </div>
         </div>

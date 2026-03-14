@@ -10,7 +10,12 @@ import { setUser } from "../slice/userSlice";
 import { Link } from "react-router";
 
 const Dashboard = () => {
-  const [statsData, setStatsData] = useState({});
+  const [statsData, setStatsData] = useState({
+    total: 0,
+    approved: 0,
+    pending: 0,
+    rejected: 0,
+  });
 
   const dispatch = useDispatch();
 
@@ -46,7 +51,12 @@ const Dashboard = () => {
         const response = await axios.get(`${API_BASE_URL}quote-stats`, {
           withCredentials: true,
         });
-        setStatsData(response.data.data);
+        setStatsData(response.data.data || {
+          total: 0,
+          approved: 0,
+          pending: 0,
+          rejected: 0,
+        });
       } catch (error) {
         alert("Error fetching stats data. Please try again later.");
         console.error("Error fetching stats data:", error);
@@ -67,11 +77,8 @@ const Dashboard = () => {
             <p>Total Quotes</p>
             <h1>{statsData.total}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#DBEAFE" }}
-          >
-            <FaGlobe style={{ fontSize: "20px", color: "#2563EB" }} />
+          <div className="icon-container">
+            <FaGlobe style={{ fontSize: "20px" }} />
           </div>
         </div>
         <div className="statistic-item">
@@ -79,11 +86,8 @@ const Dashboard = () => {
             <p>Approved</p>
             <h1>{statsData.approved}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#DCFCE7" }}
-          >
-            <FaCheckCircle style={{ fontSize: "20px", color: "green" }} />
+          <div className="icon-container">
+            <FaCheckCircle style={{ fontSize: "20px" }} />
           </div>
         </div>
         <div className="statistic-item">
@@ -91,11 +95,8 @@ const Dashboard = () => {
             <p>Pending Review</p>
             <h1>{statsData.pending}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#FFEDD5" }}
-          >
-            <FaClock style={{ fontSize: "20px", color: "orange" }} />
+          <div className="icon-container">
+            <FaClock style={{ fontSize: "20px" }} />
           </div>
         </div>
         <div className="statistic-item">
@@ -103,18 +104,15 @@ const Dashboard = () => {
             <p>Rejected</p>
             <h1>{statsData.rejected}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#FEE2E2" }}
-          >
-            <RxCrossCircled style={{ fontSize: "20px", color: "red" }} />
+          <div className="icon-container">
+            <RxCrossCircled style={{ fontSize: "20px" }} />
           </div>
         </div>
       </div>
       <div className="recent-activity-container">
         <h4>My Quotes</h4>
         <ul className="quotes-list">
-          {quotesData.length > 0 ? (
+          {quotesData && quotesData.length > 0 ? (
             quotesData.map((quote) => (
               <li key={quote.id} className="quote-item">
                 <div className="quote-top-card">
@@ -131,17 +129,17 @@ const Dashboard = () => {
                   </div>
                   <div className="status-and-edit">
                     <div className="inner-status-and-edit">
-                    <span className={`review ${quote.status}`}>
-                      {quote.status}
-                    </span>
-                    {quote.status !== "approved" && (
-                      <Link
-                        className="edit-button"
-                        to={`/quote/edit/${quote.id}`}
-                      >
-                        Edit
-                      </Link>
-                    )}
+                      <span className={`review ${quote.status}`}>
+                        {quote.status}
+                      </span>
+                      {quote.status !== "approved" && (
+                        <Link
+                          className="edit-button"
+                          to={`/quote/edit/${quote.id}`}
+                        >
+                          Edit
+                        </Link>
+                      )}
                     </div>
                     {(quote.adminComment && quote.status === "rejected") && (
                       <p className="admin-para">

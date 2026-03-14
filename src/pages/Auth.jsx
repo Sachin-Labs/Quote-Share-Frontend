@@ -1,11 +1,13 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router";
 import React, { useState, useEffect } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import "../styles/auth.css";
 import axios from "axios";
 
 const AuthPage = () => {
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const [mode, setMode] = useState("login"); // "login" | "signup" | "forgot"
+  const [mode, setMode] = useState(location.state?.mode || "login"); // "login" | "signup" | "forgot"
   const [resendTimer, setResendTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [step, setStep] = useState(1);
@@ -197,14 +199,17 @@ const AuthPage = () => {
 
   return (
     <div className="login-container">
-      <img src="/LoginSideImage.jpg" alt="side-image" />
       <div className="login-card">
+        <Link to="/" className="back-link">
+          <FaArrowRight style={{ transform: "rotate(180deg)", marginRight: "8px" }} />
+          Back to home
+        </Link>
         <h1>
           {mode === "login"
             ? "Welcome Back"
             : mode === "signup"
-            ? "Create an account"
-            : "Reset Password"}
+              ? "Create an account"
+              : "Reset Password"}
         </h1>
 
         <div className="toggle-container">
@@ -320,7 +325,7 @@ const AuthPage = () => {
           )}
 
           {mode === "signup" && (
-            <div className="terms-container">
+            <div className="auth-terms-acceptance">
               <input
                 type="checkbox"
                 id="terms"
@@ -343,7 +348,8 @@ const AuthPage = () => {
 
           {mode === "login" && (
             <button
-              className="toggle-button"
+              type="button"
+              className="forgot-link-btn"
               onClick={() => {
                 setMode("forgot");
                 setStep(1);
@@ -363,14 +369,14 @@ const AuthPage = () => {
             {loading
               ? "Please wait..."
               : mode === "login"
-              ? "Login"
-              : step === 1
-              ? "Send OTP"
-              : step === 2
-              ? "Verify OTP"
-              : mode === "signup"
-              ? "Create Account"
-              : "Reset Password"}
+                ? "Login"
+                : step === 1
+                  ? "Send OTP"
+                  : step === 2
+                    ? "Verify OTP"
+                    : mode === "signup"
+                      ? "Create Account"
+                      : "Reset Password"}
           </button>
         </form>
       </div>

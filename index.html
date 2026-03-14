@@ -1,36 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/q-logo.png" type="image/x-icon" />
-    <title>QuoteShare</title>
-    <meta
-      name="description"
-      content="QuoteShare lets you discover, create, and share meaningful quotes. Inspire others with a collection of motivational and personal sayings."
-    />
-    <meta
-      name="keywords"
-      content="quotes, QuoteShare, share quotes, motivation, inspirational quotes, daily quotes, quote app"
-    />
-    <meta name="author" content="Sachin Balagam" />
-    <meta name="robots" content="index, follow" />
 
-    <!-- Open Graph (Facebook, LinkedIn) -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/q-logo.png" type="image/x-icon" />
+  <title>QuoteShare</title>
+  <meta name="description"
+    content="QuoteShare lets you discover, create, and share meaningful quotes. Inspire others with a collection of motivational and personal sayings." />
+  <meta name="keywords"
+    content="quotes, QuoteShare, share quotes, motivation, inspirational quotes, daily quotes, quote app" />
+  <meta name="author" content="Sachin Balagam" />
+  <meta name="robots" content="index, follow" />
+
   <meta property="og:title" content="QuoteShare – Daily Quotes, Shared with Meaning" />
   <meta property="og:description" content="Discover and share inspiring quotes with the world through QuoteShare." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.quoteshare.work.gd/" />
   <meta property="og:image" content="https://www.quoteshare.work.gd/q-logo.png" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="QuoteShare – Daily Quotes, Shared with Meaning" />
   <meta name="twitter:description" content="Discover and share inspiring quotes with the world through QuoteShare." />
   <meta name="twitter:image" content="https://www.quoteshare.work.gd/q-logo.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var preferred = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', preferred);
+      } catch (e) { }
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>
