@@ -1,7 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FaClock, FaCheckCircle, FaGlobe } from "react-icons/fa";
-import { RxCrossCircled } from "react-icons/rx";
+import { FiClock, FiCheckCircle, FiFileText, FiXCircle } from "react-icons/fi";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { BsGlobeCentralSouthAsia } from "react-icons/bs";
 import "../styles/dashboard.css";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +15,21 @@ import { setQuotes } from "../slice/quoteSlice";
 import { setUser } from "../slice/userSlice";
 import { Link } from "react-router";
 
+const socialIcons = {
+  facebook: <FaFacebook className="social-icon icon-facebook" />,
+  instagram: <FaInstagram className="social-icon icon-instagram" />,
+  twitter: <FaXTwitter className="social-icon icon-twitter" />,
+  linkedin: <FaLinkedinIn className="social-icon icon-linkedin" />,
+  website: <BsGlobeCentralSouthAsia className="social-icon icon-website" />,
+};
+
 const Dashboard = () => {
-  const [statsData, setStatsData] = useState({});
+  const [statsData, setStatsData] = useState({
+    total: 0,
+    approved: 0,
+    pending: 0,
+    rejected: 0,
+  });
 
   const dispatch = useDispatch();
 
@@ -46,7 +65,12 @@ const Dashboard = () => {
         const response = await axios.get(`${API_BASE_URL}quote-stats`, {
           withCredentials: true,
         });
-        setStatsData(response.data.data);
+        setStatsData(response.data.data || {
+          total: 0,
+          approved: 0,
+          pending: 0,
+          rejected: 0,
+        });
       } catch (error) {
         alert("Error fetching stats data. Please try again later.");
         console.error("Error fetching stats data:", error);
@@ -67,11 +91,8 @@ const Dashboard = () => {
             <p>Total Quotes</p>
             <h1>{statsData.total}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#DBEAFE" }}
-          >
-            <FaGlobe style={{ fontSize: "20px", color: "#2563EB" }} />
+          <div className="icon-container icon-total">
+            <FiFileText style={{ fontSize: "22px" }} strokeWidth={2.5} />
           </div>
         </div>
         <div className="statistic-item">
@@ -79,11 +100,8 @@ const Dashboard = () => {
             <p>Approved</p>
             <h1>{statsData.approved}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#DCFCE7" }}
-          >
-            <FaCheckCircle style={{ fontSize: "20px", color: "green" }} />
+          <div className="icon-container icon-approved">
+            <FiCheckCircle style={{ fontSize: "22px" }} strokeWidth={2.5} />
           </div>
         </div>
         <div className="statistic-item">
@@ -91,11 +109,8 @@ const Dashboard = () => {
             <p>Pending Review</p>
             <h1>{statsData.pending}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#FFEDD5" }}
-          >
-            <FaClock style={{ fontSize: "20px", color: "orange" }} />
+          <div className="icon-container icon-pending">
+            <FiClock style={{ fontSize: "22px" }} strokeWidth={2.5} />
           </div>
         </div>
         <div className="statistic-item">
@@ -103,18 +118,15 @@ const Dashboard = () => {
             <p>Rejected</p>
             <h1>{statsData.rejected}</h1>
           </div>
-          <div
-            className="icon-container"
-            style={{ backgroundColor: "#FEE2E2" }}
-          >
-            <RxCrossCircled style={{ fontSize: "20px", color: "red" }} />
+          <div className="icon-container icon-rejected">
+            <FiXCircle style={{ fontSize: "22px" }} strokeWidth={2.5} />
           </div>
         </div>
       </div>
       <div className="recent-activity-container">
         <h4>My Quotes</h4>
         <ul className="quotes-list">
-          {quotesData.length > 0 ? (
+          {quotesData && quotesData.length > 0 ? (
             quotesData.map((quote) => (
               <li key={quote.id} className="quote-item">
                 <div className="quote-top-card">
@@ -131,17 +143,9 @@ const Dashboard = () => {
                   </div>
                   <div className="status-and-edit">
                     <div className="inner-status-and-edit">
-                    <span className={`review ${quote.status}`}>
-                      {quote.status}
-                    </span>
-                    {quote.status !== "approved" && (
-                      <Link
-                        className="edit-button"
-                        to={`/quote/edit/${quote.id}`}
-                      >
-                        Edit
-                      </Link>
-                    )}
+                      <span className={`review ${quote.status}`}>
+                        {quote.status}
+                      </span>
                     </div>
                     {(quote.adminComment && quote.status === "rejected") && (
                       <p className="admin-para">
@@ -152,16 +156,47 @@ const Dashboard = () => {
                 </div>
                 <p className="quote-text">"{quote.quote}"</p>
                 <div className="quote-bottom-card">
-                  <p className="id">ID: {quote.id}</p>
-                  <p className="name-and-created-at">
-                    Created At:
-                    {new Date(quote.createdAt).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <p className="id">ID: {quote.id}</p>
+                    <p className="name-and-created-at">
+                      Created At:
+                      {new Date(quote.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </p>
+                  </div>
+                  {quote.status !== "approved" && (
+                    <Link
+                      className="edit-button"
+                      to={`/quote/edit/${quote.id}`}
+                    >
+                      Edit
+                    </Link>
+                  )}
                 </div>
+
+                <ul className="social-container">
+                  {quote.socialLinks &&
+                    Object.entries(socialIcons).map(([platform, iconFile]) => {
+                      const link = quote.socialLinks ? quote.socialLinks[platform] : "";
+                      if (!link) return null;
+                      return (
+                        <li key={platform} className="each-social">
+                          <a
+                            href={
+                              link.startsWith("http") ? link : `https://${link}`
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {iconFile}
+                          </a>
+                        </li>
+                      );
+                    })}
+                </ul>
               </li>
             ))
           ) : (

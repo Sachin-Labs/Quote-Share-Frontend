@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaCircleUser, FaXTwitter } from "react-icons/fa6";
 import {
   FaQuoteLeft,
@@ -7,70 +7,88 @@ import {
   FaDownload,
   FaInstagram,
   FaLinkedinIn,
-  FaHandPointRight,
-  FaStar,
+  FaArrowRight,
 } from "react-icons/fa";
 import { HiUserAdd } from "react-icons/hi";
 import { IoShareSocial } from "react-icons/io5";
 import "../styles/home.css";
 import { Link } from "react-router";
+import axios from "axios";
 
 const HomePage = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}verify`, {
+          withCredentials: true,
+        });
+        if (res.status === 200) {
+          setIsAuthenticated(true);
+        }
+      } catch (err) {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
   return (
     <div className="home-container">
       <section className="top-grid">
         <div className="left-grid">
-          <h1 className="headline headline-one">Share your thoughts.</h1>
-          <h1 className="headline headline-two">Inspire the world.</h1>
+          <h1 className="headline">
+            <span className="headline-one">Speak your truth.</span>
+            <span className="headline-two">Inspire the collective.</span>
+          </h1>
           <p className="sub-headline">
-            Create beautiful quotes, build your profile, and inspire millions
-            through our browser extension that shows your quotes in new tabs
-            worldwide.
+            Deploy beautiful quotes to millions of new tabs daily. Build your personal
+            brand and connect with a global community of thinkers.
           </p>
           <div className="button-container">
-            <button className="button get-started-button">
-              <Link to="/auth" style={{ textDecoration: "none" }}>
-                <FaRocket style={{ marginRight: "10px" }} />
-                Get Started
+            {isAuthenticated ? (
+              <Link to="/dashboard" className="button get-started-button">
+                <FaArrowRight style={{ marginRight: "10px" }} />
+                Go to Dashboard
               </Link>
-            </button>
-            <button className="button install-extension-button">
-              <a
-                href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ textDecoration: "none" }}
-              >
-                <FaDownload style={{ marginRight: "10px" }} />
-                Install Extension
-              </a>
-            </button>
+            ) : (
+              <Link to="/auth" state={{ mode: 'signup' }} className="button get-started-button">
+                <FaRocket style={{ marginRight: "10px" }} />
+                Get Started Free
+              </Link>
+            )}
+            <a
+              href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button install-extension-button"
+            >
+              <FaDownload style={{ marginRight: "10px" }} />
+              Browser Extension
+            </a>
           </div>
         </div>
+
         <div className="right-grid">
           <div className="main-grid">
             <div className="profile-card">
               <FaCircleUser />
               <div>
-                <h4>Roopa Sowmya</h4>
-                <p>@roopasowmya</p>
+                <h4>Elena Vance</h4>
+                <p>@elevance</p>
               </div>
             </div>
-            <p>"The only way to do great work is to love what you do."</p>
+            <p className="quote-content">"Simplicity is the ultimate sophistication."</p>
             <div className="social-media-container">
               <ul className="social-media-icons">
-                <li>
-                  <FaXTwitter />
-                </li>
-                <li>
-                  <FaInstagram />
-                </li>
-                <li>
-                  <FaLinkedinIn />
-                </li>
+                <li><FaXTwitter /></li>
+                <li><FaInstagram /></li>
+                <li><FaLinkedinIn /></li>
               </ul>
-              <div>
-                <p>2 hours ago</p>
+              <div style={{ fontSize: '13px', color: 'var(--t-muted)' }}>
+                <span>Shared 5m ago</span>
               </div>
             </div>
           </div>
@@ -78,287 +96,69 @@ const HomePage = () => {
       </section>
 
       <section id="features" className="second-grid">
-        <h1 className="second-grid-heading">Everything you need to inspire</h1>
+        <h2 className="second-grid-heading">Built for distribution</h2>
         <p className="second-grid-description">
-          Simple tools to create, share, and discover meaningful quotes that
-          <br /> reach people around the world.
+          The most consistent way to share your message. Your words,
+          landing exactly where people start their journey.
         </p>
         <div className="card-container">
           <div className="card">
-            <div
-              className="icon-container"
-              style={{ backgroundColor: "#4a90e2" }}
-            >
-              <FaCircleUser style={{ color: "#fff" }} />
-            </div>
-            <h3>Create Profile</h3>
+            <div className="icon-container"><FaCircleUser /></div>
+            <h3>Verified Profiles</h3>
             <p className="quote-paragraph">
-              Build your personal brand with a custom profile, display picture,
-              and bio.
+              Claim your unique handle and build a professional presence for your thoughts and philosophy.
             </p>
           </div>
           <div className="card">
-            <div
-              className="icon-container"
-              style={{ backgroundColor: "#764BA2" }}
-            >
-              <FaQuoteLeft style={{ color: "#fff" }} />
-            </div>
-            <h3>Post Quotes</h3>
+            <div className="icon-container"><FaQuoteLeft /></div>
+            <h3>Minimal Editor</h3>
             <p className="quote-paragraph">
-              Share inspiring thoughts with custom captions and beautiful
-              formatting.
+              Focus on the message. Our interface removes distraction, letting your insight take center stage.
             </p>
           </div>
           <div className="card">
-            <div
-              className="icon-container"
-              style={{ backgroundColor: "#F093FB" }}
-            >
-              <IoShareSocial style={{ color: "#fff" }} />
-            </div>
-            <h3>Social Links</h3>
+            <div className="icon-container"><IoShareSocial /></div>
+            <h3>Cross-Platform</h3>
             <p className="quote-paragraph">
-              Connect all your social media profiles to grow your <br />{" "}
-              audience.
+              Automatic formatting for social sharing, ensuring your quotes look premium across the web.
             </p>
           </div>
           <div className="card">
-            <div
-              className="icon-container"
-              style={{ backgroundColor: "#22C55E" }}
-            >
-              <FaGlobe style={{ color: "#fff" }} />
-            </div>
-            <h3>Live Extension</h3>
+            <div className="icon-container"><FaGlobe /></div>
+            <h3>New Tab Real Estate</h3>
             <p className="quote-paragraph">
-              Your quotes appear in our browser extension's new tab for millions
-              to see.
+              The ultimate high-visibility placement. Your approved quotes appear in browser tabs worldwide.
             </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="extension" className="third-grid">
-        <div className="third-grid-left">
-          <h1>Experience quotes in every new tab</h1>
-          <p>
-            Our browser extension transforms every new tab into a moment of
-            inspiration, featuring beautiful quotes from our global community.
-          </p>
-          <ul className="third-grid-left-list">
-            <li>
-              <FaHandPointRight style={{ marginRight: "8px" }} />
-              Beautifully designed quote displays
-            </li>
-            <li>
-              <FaHandPointRight style={{ marginRight: "8px" }} />
-              Fresh inspiration with every new tab
-            </li>
-            <li>
-              <FaHandPointRight style={{ marginRight: "8px" }} />
-              Discover new voices and perspectives
-            </li>
-            <li>
-              <FaHandPointRight style={{ marginRight: "8px" }} />
-              One-click installation
-            </li>
-          </ul>
-          <button className="third-grid-button">
-            <a
-              href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none" }}
-            >
-              Add to chrome
-            </a>
-          </button>
-        </div>
-        <div className="third-grid-right">
-          <div className="tab-preview">
-            <div
-              style={{
-                height: "10px",
-                width: "10px",
-                backgroundColor: "red",
-                borderRadius: "50%",
-              }}
-            ></div>
-            <div
-              style={{
-                height: "10px",
-                width: "10px",
-                backgroundColor: "yellow",
-                borderRadius: "50%",
-              }}
-            ></div>
-            <div
-              style={{
-                height: "10px",
-                width: "10px",
-                backgroundColor: "green",
-                borderRadius: "50%",
-              }}
-            ></div>
-            <p style={{ color: "#fff", fontWeight: "300px" }}>New Tab</p>
-          </div>
-          <div className="third-grid-right-main">
-            <div
-              className="icon-container"
-              style={{ backgroundColor: "#4a90e2" }}
-            >
-              <FaCircleUser style={{ color: "#fff" }} />
-            </div>
-            <h3 className="user-name">ShivaKumar BR</h3>
-            <p className="user-name">@shivakumar</p>
-            <h2 className="user-name review-text" style={{ fontWeight: "300" }}>
-              "Every moment is a fresh beginning."
-            </h2>
-            <div className="social-media-container">
-              <ul className="social-media-icons">
-                <li>
-                  <FaXTwitter style={{ color: "white" }} />
-                </li>
-                <li>
-                  <FaInstagram style={{ color: "white" }} />
-                </li>
-                <li>
-                  <FaLinkedinIn style={{ color: "white" }} />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="second-grid">
-        <h1 className="second-grid-heading">Loved by creators</h1>
-        <p className="second-grid-description">
-          Join thousands who are already inspiring thousands with their words.
-        </p>
-        <div className="user-card-container">
-          <div className="user-card">
-            <div className="user-profile">
-              <div
-                className="icon-container"
-                style={{ backgroundColor: "#4a90e2" }}
-              >
-                <FaCircleUser style={{ color: "#fff" }} />
-              </div>
-              <div className="user-details">
-                <h3>SaiKiran Desharaju</h3>
-                <pre>@saikirand</pre>
-              </div>
-            </div>
-            <p className="review-text">
-              "QuoteShare has become my daily source of inspiration. Seeing my
-              quotes reach people globally through the extension is incredible!"
-            </p>
-            <div>
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} style={{ color: "#FFD700" }} />
-              ))}
-            </div>
-          </div>
-          <div className="user-card">
-            <div className="user-profile">
-              <div
-                className="icon-container"
-                style={{ backgroundColor: "#53Cb26" }}
-              >
-                <FaCircleUser style={{ color: "#fff" }} />
-              </div>
-              <div className="user-details">
-                <h3>Shivaprasad M</h3>
-                <pre>@shivaprasadm</pre>
-              </div>
-            </div>
-            <p className="review-text">
-              "The extension brings me joy every morning. It's amazing how a
-              simple quote can change your entire day's perspective."
-            </p>
-            <div>
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} style={{ color: "#FFD700" }} />
-              ))}
-            </div>
-          </div>
-          <div className="user-card">
-            <div className="user-profile">
-              <div
-                className="icon-container"
-                style={{ backgroundColor: "#96B95f" }}
-              >
-                <FaCircleUser style={{ color: "#fff" }} />
-              </div>
-              <div className="user-details">
-                <h3>VenkataRao CH</h3>
-                <pre>@venkatarao</pre>
-              </div>
-            </div>
-            <p className="review-text">
-              "Building my personal brand through QuoteShare has opened so many
-              doors. The platform is beautifully designed and easy to use."
-            </p>
-            <div>
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} style={{ color: "#FFD700" }} />
-              ))}
-            </div>
-          </div>
-          <div className="user-card">
-            <div className="user-profile">
-              <div
-                className="icon-container"
-                style={{ backgroundColor: "#7FD790" }}
-              >
-                <FaCircleUser style={{ color: "#fff" }} />
-              </div>
-              <div className="user-details">
-                <h3>M.B.V. Shiva</h3>
-                <pre>@mbvshiva</pre>
-              </div>
-            </div>
-            <p className="review-text">
-              “I never thought a browser extension could make such a difference.
-              Seeing meaningful quotes right when I open a new tab is like a
-              daily dose of motivation.”
-            </p>
-            <div>
-              {[...Array(5)].map((_, index) => (
-                <FaStar key={index} style={{ color: "#FFD700" }} />
-              ))}
-            </div>
           </div>
         </div>
       </section>
 
       <section id="community" className="fourth-grid">
-        <h1 className="fourth-grid-heading">Ready to inspire the world?</h1>
+        <h2 className="fourth-grid-heading">Ready to start sharing?</h2>
         <p className="fourth-grid-description">
-          Join our community of creators and start sharing your thoughts with
-          millions of people
-          <br /> worldwide.
+          Join the community of creators building a more thoughtful web experience.
         </p>
         <div className="button-container">
-          <button className="get-started-button button">
-            <Link to="/auth" style={{ textDecoration: "none" }}>
+          {isAuthenticated ? (
+            <Link to="/dashboard" className="button get-started-button">
+              <FaArrowRight style={{ marginRight: "10px" }} />
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link to="/auth" state={{ mode: 'signup' }} className="button get-started-button">
               <HiUserAdd style={{ marginRight: "10px" }} />
               Create Account
             </Link>
-          </button>
-          <button className="install-extension-button button">
-            <a
-              href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: "none" }}
-            >
-              <FaDownload style={{ marginRight: "10px" }} />
-              Install Extension
-            </a>
-          </button>
+          )}
+          <a
+            href="https://chromewebstore.google.com/detail/quote-share/mkgcbeaoegecopclkmhdfieamkjejfgg"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button install-extension-button"
+          >
+            <FaDownload style={{ marginRight: "10px" }} />
+            View Extension
+          </a>
         </div>
       </section>
     </div>

@@ -1,8 +1,16 @@
-.settings-page-main-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    height: 100%;
+.settings-container {
+  max-width: 600px;
+}
+
+.settings-card {
+  background-color: var(--t-surface);
+  border: 1px solid var(--t-line);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+}
+
+.settings-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
 }

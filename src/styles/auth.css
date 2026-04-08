@@ -1,75 +1,177 @@
 .login-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: var(--t-canvas);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--t-surface);
+  padding: 40px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--t-line);
+  box-shadow: var(--shadow-card);
+}
+
+.login-card h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t-muted);
+  text-decoration: none;
+  margin-bottom: 16px;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--t-bright);
 }
 
 .toggle-container {
   display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.toggle-container p {
+  font-size: 14px;
+  color: var(--t-subtle);
 }
 
 .toggle-button {
-  background-color: transparent;
+  background: none;
   border: none;
-  cursor: pointer;
-  color: #007bff;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--t-bright);
+  padding: 0;
 }
 
-.login-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
+.toggle-button:hover {
+  text-decoration: underline;
 }
+
 .login-form {
   display: flex;
   flex-direction: column;
-  padding: 20px;
 }
-.terms-container {
+
+/* Form Grouping for spacing */
+.login-form label {
+  margin-top: 12px;
+  margin-bottom: 4px;
+}
+
+.login-form label:first-of-type {
+  margin-top: 0;
+}
+
+.auth-terms-acceptance {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 12px;
 }
 
 .terms-checkbox {
-  width: 20px;
-  height: 20px;
-  margin: 0px;
-  margin-right: 10px;
-  display: flex;
-  align-self: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  cursor: pointer;
+  accent-color: var(--t-accent);
+}
+
+.auth-terms-acceptance label {
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--t-subtle);
+  margin-bottom: 0;
+  line-height: 1.5;
 }
 
 .authButton {
-  background-color: #007bff;
-  color: white;
+  margin-top: 20px;
+  height: 48px;
+  background-color: var(--t-accent);
+  color: var(--t-accent-fg);
   border: none;
-  border-radius: 5px;
-  height: 52px;
-  width: 350px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 30px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.authButton:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.authButton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.authButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .resend-container {
-  margin-top: 10px;
+  margin-top: 12px;
   text-align: right;
 }
 
 .resend-button {
   background: none;
   border: none;
-  color: #6366f1;
-  cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t-muted);
 }
 
-.resend-button:disabled {
-  color: #9ca3af;
-  cursor: not-allowed;
+.resend-button:not(:disabled) {
+  color: var(--t-subtle);
 }
 
+.resend-button:not(:disabled):hover {
+  color: var(--t-bright);
+}
+
+.forgot-link-btn {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--t-muted);
+  text-align: right;
+  align-self: flex-end;
+}
+
+.forgot-link-btn:hover {
+  color: var(--t-bright);
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+}
