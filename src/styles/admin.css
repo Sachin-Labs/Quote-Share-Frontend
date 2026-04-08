@@ -1,17 +1,115 @@
-.social-container{
-    display: flex;
-    flex-direction: row;
-    justify-self: flex-start;
-    background-color: black;
-    list-style-type: none;
-    gap: 30px;
-    padding-left: 0;
-    padding: 0px 30px;
-    margin-top: 30px;
+.social-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-type: none;
+  gap: 20px;
+  padding: 0;
+  margin-top: 24px;
 }
-.comment-container{
-    display: flex;
+
+.each-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.each-social a:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.comment-container label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--t-muted);
+}
+
+.comment-container textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--t-line);
+  background-color: var(--t-canvas);
+  color: var(--t-bright);
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment-container textarea:focus {
+  outline: none;
+  border-color: var(--t-accent);
+  box-shadow: 0 0 0 2px rgba(var(--t-accent-rgb), 0.1);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.action-buttons button {
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.action-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.action-buttons button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-approve {
+  background-color: #10b981;
+  /* Success Green */
+  color: white;
+}
+
+.btn-approve:hover:not(:disabled) {
+  background-color: #059669;
+}
+
+.btn-reject {
+  background-color: var(--t-error);
+  color: white;
+}
+
+.btn-reject:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .action-buttons {
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: stretch;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    padding: 10px;
+  }
 }

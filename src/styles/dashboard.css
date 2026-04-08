@@ -52,15 +52,42 @@
 }
 
 .icon-container {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
-  background-color: var(--t-raised);
-  color: var(--t-dim);
+  border-radius: var(--radius-full);
 }
+
+.icon-total {
+  background-color: rgba(59, 130, 246, 0.15);
+  /* Soft Blue */
+  color: #3b82f6;
+  /* Blue */
+}
+
+.icon-approved {
+  background-color: rgba(16, 185, 129, 0.15);
+  /* Soft Emerald/Green */
+  color: #10b981;
+  /* Emerald/Green */
+}
+
+.icon-pending {
+  background-color: rgba(245, 158, 11, 0.15);
+  /* Soft Amber/Orange */
+  color: #f59e0b;
+  /* Amber/Orange */
+}
+
+.icon-rejected {
+  background-color: rgba(239, 68, 68, 0.15);
+  /* Soft Red */
+  color: #ef4444;
+  /* Red */
+}
+
 
 .recent-activity-container {
   background-color: var(--t-canvas);
@@ -78,6 +105,30 @@
   gap: 16px;
   list-style-type: none;
   padding: 0;
+}
+
+.social-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  list-style-type: none;
+  gap: 20px;
+  padding: 0;
+  margin-top: 16px;
+}
+
+.each-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.each-social a:hover {
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
 .quote-item {
@@ -134,6 +185,7 @@
   border: 1px solid var(--t-line);
   background-color: var(--t-raised);
   color: var(--t-dim);
+  margin-bottom: 16px;
 }
 
 .approved {
@@ -194,6 +246,7 @@
 
 .quote-bottom-card {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
@@ -208,6 +261,20 @@
     gap: 16px;
   }
 
+  .quote-details h3 {
+    font-size: 14px;
+  }
+
+  .name-and-created-at {
+    font-size: 11px;
+  }
+
+  .quote-text {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
   .status-and-edit {
     align-items: flex-start;
     width: 100%;
@@ -216,5 +283,19 @@
   .inner-status-and-edit {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .quote-bottom-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 11px;
+    padding-top: 12px;
+  }
+
+  .quote-bottom-card .edit-button {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
   }
 }

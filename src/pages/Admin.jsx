@@ -4,22 +4,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { setQuotes } from "../slice/quoteSlice";
 import "../styles/admin.css";
 
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { BsGlobeCentralSouthAsia } from "react-icons/bs";
+
 const socialIcons = {
-  facebook: "fb.svg",
-  instagram: "instagram.svg",
-  twitter: "twitter.svg",
-  linkedin: "LinkedIn.svg",
+  facebook: <FaFacebook className="social-icon icon-facebook" />,
+  instagram: <FaInstagram className="social-icon icon-instagram" />,
+  twitter: <FaXTwitter className="social-icon icon-twitter" />,
+  linkedin: <FaLinkedinIn className="social-icon icon-linkedin" />,
+  website: <BsGlobeCentralSouthAsia className="social-icon icon-website" />,
 };
 
-
- 
 
 const Admin = () => {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const quotesData = useSelector((state) => state.quote.quotes);
-   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchQuotes = async () => {
     try {
@@ -101,33 +108,6 @@ const Admin = () => {
                   </div>
                 </div>
 
-                {quote.status === "pending" && (
-                  <div className="status-and-edit">
-                    <div className="comment-container">
-                      <label htmlFor={`comment-${quote._id}`}>Comment</label>
-                      <textarea
-                        id={`comment-${quote._id}`}
-                        required
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      />
-                    </div>
-                    <button
-                      className="submit-button"
-                      disabled={loading}
-                      onClick={() => approveQuote(quote._id)}
-                    >
-                      Approve
-                    </button>
-                    <button
-                      className="submit-button"
-                      disabled={loading}
-                      onClick={() => rejectQuote(quote._id)}
-                    >
-                      Reject
-                    </button>
-                  </div>
-                )}
               </div>
 
               <p className="quote-text">"{quote.quote}"</p>
@@ -157,12 +137,43 @@ const Admin = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <img src={iconFile} alt={`${platform} icon`} />
+                          {iconFile}
                         </a>
                       </li>
                     );
                   })}
               </ul>
+
+              {quote.status === "pending" && (
+                <div className="status-and-edit">
+                  <div className="comment-container">
+                    <label htmlFor={`comment-${quote._id}`}>Admin Comment</label>
+                    <textarea
+                      id={`comment-${quote._id}`}
+                      required
+                      placeholder="Leave a comment about this quote..."
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                  </div>
+                  <div className="action-buttons">
+                    <button
+                      className="submit-button btn-approve"
+                      disabled={loading}
+                      onClick={() => approveQuote(quote._id)}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="submit-button btn-reject"
+                      disabled={loading}
+                      onClick={() => rejectQuote(quote._id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              )}
             </li>
           ))
         ) : (
