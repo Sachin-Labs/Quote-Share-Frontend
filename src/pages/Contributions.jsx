@@ -56,7 +56,7 @@ const Contributions = () => {
         <div className="section-paragraph">
           Build your personal brand while spreading wisdom.
         </div>
-        {/* <a href="https://www.quoteshare.work.gd/auth" className="contributors-button">Submit Your Quote</a> */}
+        {/* <a href="https://www.sina-quotes.work.gd/auth" className="contributors-button">Submit Your Quote</a> */}
       </div>
 
       <div className="contributors-section">

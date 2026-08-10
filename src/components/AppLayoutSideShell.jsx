@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router";
-import { FaChartBar, FaQuoteLeft, FaCog, FaUserShield, FaSignOutAlt, FaTimes } from "react-icons/fa";
+import { Grid2X2, ScrollText, Sliders, Fingerprint, LogOut, X } from "lucide-react";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,11 +23,11 @@ const AppLayoutSideShell = ({ isOpen, onClose }) => {
     <div className={`applayout-side-shell ${isOpen ? "open" : ""}`}>
       <div className="sidebar-header">
         <p className="logo" style={{ margin: 0 }}>
-          <FaQuoteLeft className="logo-icon" />
-          QuoteShare
+          <img src="/sina-quotes-logo.svg" alt="Sina Quotes Logo" className="logo-icon" />
+          SINA Quotes
         </p>
         <button className="close-sidebar" onClick={onClose}>
-          <FaTimes />
+          <X size={20} />
         </button>
       </div>
 
@@ -39,8 +39,8 @@ const AppLayoutSideShell = ({ isOpen, onClose }) => {
             isActive ? "applayout-link active" : "applayout-link"
           }
         >
-          <FaChartBar className="nav-icon" />
-          <span>Dashboard</span>
+          <Grid2X2 className="nav-icon" size={18} />
+          <span>Overview</span>
         </NavLink>
 
         <NavLink
@@ -50,8 +50,8 @@ const AppLayoutSideShell = ({ isOpen, onClose }) => {
             isActive ? "applayout-link active" : "applayout-link"
           }
         >
-          <FaQuoteLeft className="nav-icon" />
-          <span>Quotes</span>
+          <ScrollText className="nav-icon" size={18} />
+          <span>Write Quote</span>
         </NavLink>
 
         <NavLink
@@ -61,7 +61,7 @@ const AppLayoutSideShell = ({ isOpen, onClose }) => {
             isActive ? "applayout-link active" : "applayout-link"
           }
         >
-          <FaCog className="nav-icon" />
+          <Sliders className="nav-icon" size={18} />
           <span>Settings</span>
         </NavLink>
 
@@ -73,13 +73,13 @@ const AppLayoutSideShell = ({ isOpen, onClose }) => {
               isActive ? "applayout-link active" : "applayout-link"
             }
           >
-            <FaUserShield className="nav-icon" />
-            <span>Admin Control</span>
+            <Fingerprint className="nav-icon" size={18} />
+            <span>Review Queue</span>
           </NavLink>
         )}
       </div>
       <button className="logout-button" onClick={logout}>
-        <FaSignOutAlt className="nav-icon" />
+        <LogOut className="nav-icon" size={18} />
         <span>Logout</span>
       </button>
     </div>

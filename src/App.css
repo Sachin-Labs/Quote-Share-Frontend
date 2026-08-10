@@ -12,6 +12,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -22,6 +24,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   transition: background-color 0.2s ease, color 0.2s ease;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 label {

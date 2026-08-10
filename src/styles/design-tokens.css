@@ -2,37 +2,34 @@
 :root {
   /* Canvas & surfaces */
   --t-canvas: #ffffff;
-  --t-surface: #fafafa;
-  --t-raised: #f4f4f5;
-  --t-overlay: #e4e4e7;
+  --t-surface: #faf9ff; /* Soft lavender white */
+  --t-raised: #f3ecff;  /* Secondary color */
+  --t-overlay: #e8ddff; /* Hover/overlay */
 
   /* Borders */
-  --t-line: #e4e4e7;
-  --t-edge: #d4d4d8;
+  --t-line: #e3d5ff;    /* Border line */
+  --t-edge: #d3c0ff;    /* Stronger border edge */
 
   /* Text */
-  --t-bright: #09090b;
-  /* primary — near-black, NOT #000 */
-  --t-dim: #3f3f46;
-  /* secondary headings */
-  --t-subtle: #71717a;
-  /* secondary body */
-  --t-muted: #a1a1aa;
-  /* placeholder / disabled / meta */
-  --t-faint: #d4d4d8;
-  /* ghost / dividers */
+  --t-bright: #1b0042;  /* Rich dark purple for primary text */
+  --t-dim: #3e2863;     /* Dark purple/gray for headings */
+  --t-subtle: #685785;  /* Soft purple/gray for secondary text */
+  --t-muted: #998cae;   /* Placeholder / disabled / meta */
+  --t-faint: #e8ddff;   /* Ghost / dividers */
 
   /* Accent (CTA / active) */
-  --t-accent: #18181b;
-  --t-accent-hover: #27272a;
-  --t-accent-fg: #fafafa;
-  /* text ON accent bg */
+  --t-accent: #A56BFF;       /* Primary purple */
+  --t-accent-hover: #9152ff; /* Primary hover */
+  --t-accent-fg: #ffffff;    /* Text ON accent bg */
+  --t-accent-soft: rgba(165, 107, 255, 0.12);
+  --t-accent-border: rgba(165, 107, 255, 0.25);
+  --t-secondary: #F3ECFF;
 
   /* State */
   --t-error: #dc2626;
 
   /* ---------- Typography ---------- */
-  --t-font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --t-font-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --t-font-mono: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Consolas;
 
   /* ---------- Radius ---------- */
@@ -43,29 +40,32 @@
   --radius-full: 9999px;
 
   /* ---------- Shadows ---------- */
-  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.10);
+  --shadow-card: 0 1px 3px rgba(165, 107, 255, 0.08), 0 1px 2px rgba(165, 107, 255, 0.04);
+  --shadow-modal: 0 10px 40px rgba(165, 107, 255, 0.12);
 }
 
 /* ---------- DARK MODE ---------- */
 [data-theme="dark"] {
-  --t-canvas: #09090b;
-  --t-surface: #18181b;
-  --t-raised: #27272a;
-  --t-overlay: #3f3f46;
+  --t-canvas: #090b0a;  /* Dark mode background */
+  --t-surface: #0e100f; /* Slightly lighter surface matching sina-people */
+  --t-raised: #141713;  /* Card background */
+  --t-overlay: #1e2420; /* Hover/overlay */
 
-  --t-line: #27272a;
-  --t-edge: #3f3f46;
+  --t-line: #1b211d;    /* Border line */
+  --t-edge: #29302b;    /* Stronger border edge */
 
-  --t-bright: #fafafa;
-  --t-dim: #a1a1aa;
-  --t-subtle: #71717a;
-  --t-muted: #52525b;
-  --t-faint: #3f3f46;
+  --t-bright: #f4f0fa;  /* Soft white with purple tint */
+  --t-dim: #a49cb0;     /* Muted lavender/gray */
+  --t-subtle: #7d758c;  /* Subtle secondary text */
+  --t-muted: #575e58;   /* Disabled / placeholder */
+  --t-faint: #343b36;   /* Ghost / divider */
 
-  --t-accent: #e4e4e7;
-  --t-accent-hover: #d4d4d8;
-  --t-accent-fg: #09090b;
+  --t-accent: #A56BFF;       /* Primary purple */
+  --t-accent-hover: #b685ff; /* Primary hover in dark mode */
+  --t-accent-fg: #ffffff;    /* Text ON accent bg */
+  --t-accent-soft: rgba(165, 107, 255, 0.16);
+  --t-accent-border: rgba(165, 107, 255, 0.3);
+  --t-secondary: #1a1226;    /* Dark purple-ish secondary background */
 
   --t-error: #f87171;
 

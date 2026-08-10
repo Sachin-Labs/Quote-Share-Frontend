@@ -30,11 +30,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: border-color 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .statistic-item:hover {
   border-color: var(--t-edge);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
 .statistic-item p {
@@ -47,47 +49,54 @@
 }
 
 .statistic-item h1 {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 800;
   margin: 0;
+  color: var(--t-bright);
 }
 
 .icon-container {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-lg);
+  transition: transform 0.15s ease;
 }
 
-.icon-total {
-  background-color: rgba(59, 130, 246, 0.15);
-  /* Soft Blue */
-  color: #3b82f6;
-  /* Blue */
+/* Premium Themed Icon Backdrops & Border Transitions on Hover */
+.statistic-item.stat-total:hover {
+  border-color: var(--t-accent);
+}
+.statistic-item.stat-total .icon-container {
+  background-color: rgba(165, 107, 255, 0.12);
+  color: var(--t-accent);
 }
 
-.icon-approved {
-  background-color: rgba(16, 185, 129, 0.15);
-  /* Soft Emerald/Green */
+.statistic-item.stat-approved:hover {
+  border-color: #10b981;
+}
+.statistic-item.stat-approved .icon-container {
+  background-color: rgba(16, 185, 129, 0.12);
   color: #10b981;
-  /* Emerald/Green */
 }
 
-.icon-pending {
-  background-color: rgba(245, 158, 11, 0.15);
-  /* Soft Amber/Orange */
+.statistic-item.stat-pending:hover {
+  border-color: #f59e0b;
+}
+.statistic-item.stat-pending .icon-container {
+  background-color: rgba(245, 158, 11, 0.12);
   color: #f59e0b;
-  /* Amber/Orange */
 }
 
-.icon-rejected {
-  background-color: rgba(239, 68, 68, 0.15);
-  /* Soft Red */
+.statistic-item.stat-rejected:hover {
+  border-color: #ef4444;
+}
+.statistic-item.stat-rejected .icon-container {
+  background-color: rgba(239, 68, 68, 0.12);
   color: #ef4444;
-  /* Red */
 }
-
 
 .recent-activity-container {
   background-color: var(--t-canvas);
@@ -105,30 +114,6 @@
   gap: 16px;
   list-style-type: none;
   padding: 0;
-}
-
-.social-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  list-style-type: none;
-  gap: 20px;
-  padding: 0;
-  margin-top: 16px;
-}
-
-.each-social a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  opacity: 0.85;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.each-social a:hover {
-  opacity: 1;
-  transform: translateY(-2px);
 }
 
 .quote-item {
@@ -182,27 +167,25 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 1px solid var(--t-line);
-  background-color: var(--t-raised);
-  color: var(--t-dim);
-  margin-bottom: 16px;
+  border: 1px solid transparent;
 }
 
-.approved {
-  border-color: var(--t-edge);
-  background-color: var(--t-overlay);
-  color: var(--t-bright);
+.review.approved {
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #10b981;
 }
 
-.pending {
-  border-color: var(--t-line);
-  color: var(--t-subtle);
+.review.pending {
+  background-color: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
 }
 
-.rejected {
-  border-color: var(--t-error);
-  color: var(--t-error);
-  background-color: transparent;
+.review.rejected {
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #ef4444;
 }
 
 .status-and-edit {
@@ -246,7 +229,6 @@
 
 .quote-bottom-card {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
@@ -261,20 +243,6 @@
     gap: 16px;
   }
 
-  .quote-details h3 {
-    font-size: 14px;
-  }
-
-  .name-and-created-at {
-    font-size: 11px;
-  }
-
-  .quote-text {
-    font-size: 14px;
-    line-height: 1.5;
-    margin-bottom: 16px;
-  }
-
   .status-and-edit {
     align-items: flex-start;
     width: 100%;
@@ -284,18 +252,12 @@
     width: 100%;
     justify-content: space-between;
   }
+}
 
+@media (max-width: 480px) {
   .quote-bottom-card {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    font-size: 11px;
-    padding-top: 12px;
-  }
-
-  .quote-bottom-card .edit-button {
-    width: 100%;
-    text-align: center;
-    box-sizing: border-box;
+    gap: 8px;
   }
 }
