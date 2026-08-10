@@ -1,6 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router";
 import React, { useState, useEffect } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import "../styles/auth.css";
 import axios from "axios";
 
@@ -200,10 +199,12 @@ const AuthPage = () => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <Link to="/" className="back-link">
-          <FaArrowRight style={{ transform: "rotate(180deg)", marginRight: "8px" }} />
-          Back to home
-        </Link>
+        <div className="auth-header">
+          <Link to="/" aria-label="SINA Quotes Home">
+            <img src="/sina-quotes-logo.svg" alt="SINA Quotes Logo" className="auth-logo" />
+          </Link>
+          <span className="auth-logo-text">SINA Quotes</span>
+        </div>
         <h1>
           {mode === "login"
             ? "Welcome Back"
@@ -258,6 +259,7 @@ const AuthPage = () => {
               <label>Name</label>
               <input
                 name="name"
+                placeholder="Elena Vance"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -268,6 +270,7 @@ const AuthPage = () => {
           <label>Email</label>
           <input
             name="emailId"
+            placeholder="elena@example.com"
             value={formData.emailId}
             onChange={handleChange}
             required
@@ -280,6 +283,7 @@ const AuthPage = () => {
               <input
                 type="password"
                 name="password"
+                placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -292,6 +296,7 @@ const AuthPage = () => {
               <label>Enter OTP</label>
               <input
                 name="otp"
+                placeholder="123456"
                 value={formData.otp}
                 onChange={handleChange}
                 required
@@ -317,6 +322,7 @@ const AuthPage = () => {
               <input
                 type="password"
                 name="password"
+                placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
                 required

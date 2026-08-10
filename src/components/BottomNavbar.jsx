@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { FaQuoteLeft } from "react-icons/fa";
 
 const BottomNavbar = () => {
   return (
@@ -7,8 +6,8 @@ const BottomNavbar = () => {
       <div className="bottom-first-card">
         <div className="bottom-logo-card">
           <p className="logo">
-            <FaQuoteLeft className="logo-icon" />
-            QuoteShare
+            <img src="/sina-quotes-logo.svg" alt="Sina Quotes Logo" className="logo-icon" />
+            SINA Quotes
           </p>
           <p>
             Share inspiration, spread positivity, and motivate others with beautiful quotes.

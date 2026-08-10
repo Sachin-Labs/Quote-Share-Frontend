@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { FaQuoteLeft } from "react-icons/fa";
 import '../styles/navbar.css';
 import ThemeToggle from "./ThemeToggle";
 import axios from "axios";
@@ -28,8 +27,8 @@ const TopNavbar = () => {
   return (
     <nav>
       <a className="logo" href="/">
-        <FaQuoteLeft className="logo-icon" />
-        QuoteShare
+        <img src="/sina-quotes-logo.svg" alt="Sina Quotes Logo" className="logo-icon" />
+        SINA Quotes
       </a>
 
       <div className="nav-right">

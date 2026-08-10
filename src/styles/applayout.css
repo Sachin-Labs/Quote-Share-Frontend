@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   background-color: var(--t-canvas);
 }
 
@@ -111,8 +114,10 @@
 .children-container {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 32px;
   background-color: var(--t-canvas);
+  max-width: 100%;
 }
 
 .logout-button {
@@ -155,10 +160,12 @@
     z-index: 1000;
     transform: translateX(-100%);
     box-shadow: 20px 0 50px rgba(0, 0, 0, 0.1);
+    display: none; /* Completely hide when closed to prevent page overflow */
   }
 
   .applayout-side-shell.open {
     transform: translateX(0);
+    display: flex; /* Display only when triggered active */
   }
 
   .sidebar-header {

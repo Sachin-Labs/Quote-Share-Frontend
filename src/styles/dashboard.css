@@ -30,11 +30,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: border-color 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .statistic-item:hover {
   border-color: var(--t-edge);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
 .statistic-item p {
@@ -47,19 +49,53 @@
 }
 
 .statistic-item h1 {
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: 800;
   margin: 0;
+  color: var(--t-bright);
 }
 
 .icon-container {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
-  background-color: var(--t-raised);
-  color: var(--t-dim);
+  border-radius: var(--radius-lg);
+  transition: transform 0.15s ease;
+}
+
+/* Premium Themed Icon Backdrops & Border Transitions on Hover */
+.statistic-item.stat-total:hover {
+  border-color: var(--t-accent);
+}
+.statistic-item.stat-total .icon-container {
+  background-color: rgba(165, 107, 255, 0.12);
+  color: var(--t-accent);
+}
+
+.statistic-item.stat-approved:hover {
+  border-color: #10b981;
+}
+.statistic-item.stat-approved .icon-container {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+}
+
+.statistic-item.stat-pending:hover {
+  border-color: #f59e0b;
+}
+.statistic-item.stat-pending .icon-container {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: #f59e0b;
+}
+
+.statistic-item.stat-rejected:hover {
+  border-color: #ef4444;
+}
+.statistic-item.stat-rejected .icon-container {
+  background-color: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
 }
 
 .recent-activity-container {
@@ -131,26 +167,25 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 1px solid var(--t-line);
-  background-color: var(--t-raised);
-  color: var(--t-dim);
+  border: 1px solid transparent;
 }
 
-.approved {
-  border-color: var(--t-edge);
-  background-color: var(--t-overlay);
-  color: var(--t-bright);
+.review.approved {
+  background-color: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.25);
+  color: #10b981;
 }
 
-.pending {
-  border-color: var(--t-line);
-  color: var(--t-subtle);
+.review.pending {
+  background-color: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #f59e0b;
 }
 
-.rejected {
-  border-color: var(--t-error);
-  color: var(--t-error);
-  background-color: transparent;
+.review.rejected {
+  background-color: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #ef4444;
 }
 
 .status-and-edit {
@@ -216,5 +251,13 @@
   .inner-status-and-edit {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-bottom-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
