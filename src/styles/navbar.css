@@ -3,7 +3,9 @@ nav {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--t-canvas);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 0 48px;
   height: 60px;
   border-bottom: 1px solid var(--t-line);
@@ -12,7 +14,11 @@ nav {
   left: 0;
   right: 0;
   z-index: 100;
-  transition: padding 0.3s ease;
+  transition: padding 0.3s ease, background-color 0.3s ease;
+}
+
+[data-theme="dark"] nav {
+  background-color: rgba(9, 11, 10, 0.85);
 }
 
 .logo {
@@ -27,8 +33,9 @@ nav {
 }
 
 .logo-icon {
-  font-size: 14px;
-  color: var(--t-accent);
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
   margin-bottom: 2px;
 }
 

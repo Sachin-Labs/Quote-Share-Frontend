@@ -1,22 +1,23 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaInfoCircle,
-  FaEdit,
-  FaLinkedinIn,
-} from "react-icons/fa";
-
-import { FaXTwitter } from "react-icons/fa6";
-
-import { BsGlobeCentralSouthAsia } from "react-icons/bs";
-import React, { useEffect, useState } from "react";
-import ImageGalleryModal from "../components/ImageGalleryModal";
+import React, { useEffect, useState, useRef } from "react";
+import { Globe, Info, Sparkles, Upload, Image } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter } from "../components/SocialIcons";
 import axios from "axios";
 import "../styles/quotes.css";
+import "../styles/settings.css"; // Reuse input style definitions
 import { useNavigate, useParams } from "react-router";
+
+const socialIcons = {
+  facebook: Facebook,
+  instagram: Instagram,
+  linkedin: Linkedin,
+  twitter: Twitter,
+  website: Globe,
+};
 
 const Quotes = ({ mode }) => {
   const { id } = useParams();
+  const fileInputRef = useRef(null);
+
   const [formData, setFormData] = useState({
     quote: "",
     author: "",
@@ -29,28 +30,49 @@ const Quotes = ({ mode }) => {
       website: "",
     },
   });
+
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [imageUrl, setImageUrl] = useState(null);
+  const [imagesList, setImagesList] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const isEditMode = mode === "edit";
 
+  // Fetch preset wallpapers
+  const fetchImages = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}images`, {
+        withCredentials: true,
+      });
+      setImagesList(res.data.data || []);
+      // If we don't have an imageUrl yet, set it to the first preset image
+      if (res.data.data && res.data.data.length > 0 && !imageUrl && !isEditMode) {
+        setImageUrl(res.data.data[0].imageUrl);
+      }
+    } catch (err) {
+      console.error("Failed to load preset images:", err);
+    }
+  };
+
   useEffect(() => {
-    if (mode === "edit" && id) {
+    fetchImages();
+  }, []);
+
+  // Fetch single quote detail for edit mode
+  useEffect(() => {
+    if (isEditMode && id) {
       axios
         .get(`${API_BASE_URL}quote/${id}`, { withCredentials: true })
         .then((res) => {
           const { quote, author, caption, socialLinks, imageUrl } =
             res.data.data;
-          // console.log(res.data.data);
           setFormData({ quote, author, caption, socialLinks });
           setImageUrl(imageUrl);
         })
         .catch((err) => {
-          console.error("Failed to load quote", err);
-          alert("Quote not found or unauthorized");
+          console.error("Failed to load quote details:", err);
+          alert("Quote not found or unauthorized.");
           navigate("/dashboard");
         });
     }
@@ -73,12 +95,44 @@ const Quotes = ({ mode }) => {
     }
   };
 
+  // Upload local image directly from presets bar
+  const handleCustomImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const uploadData = new FormData();
+    uploadData.append("image", file);
+
+    try {
+      setIsSubmitting(true);
+      const res = await axios.post(`${API_BASE_URL}image/upload`, uploadData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const newImgUrl = res.data.data.imageUrl;
+      setImageUrl(newImgUrl);
+      fetchImages(); // Refresh the list
+      alert("Custom image uploaded and applied successfully!");
+    } catch (err) {
+      console.error("Custom image upload failed:", err);
+      alert("Failed to upload custom image. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const triggerFileSelect = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     if (!imageUrl) {
-      alert("Please select an image before submitting.");
+      alert("Please select a background image before submitting.");
       setIsSubmitting(false);
       return;
     }
@@ -98,27 +152,30 @@ const Quotes = ({ mode }) => {
 
       const method = isEditMode ? "put" : "post";
 
-      const res = await axios({
+      await axios({
         method,
         url,
         data: payload,
         withCredentials: true,
       });
 
-      alert("Quote submitted successfully!");
-      setFormData({
-        quote: "",
-        author: "",
-        caption: "",
-        socialLinks: {
-          facebook: "",
-          instagram: "",
-          twitter: "",
-          linkedin: "",
-          website: "",
-        },
-      });
-      setImageUrl(null);
+      alert(isEditMode ? "Quote updated successfully!" : "Quote submitted for review successfully!");
+      if (!isEditMode) {
+        setFormData({
+          quote: "",
+          author: "",
+          caption: "",
+          socialLinks: {
+            facebook: "",
+            instagram: "",
+            twitter: "",
+            linkedin: "",
+            website: "",
+          },
+        });
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       alert(error?.response?.data?.message || "Error submitting quote");
       console.error(error);
@@ -126,215 +183,256 @@ const Quotes = ({ mode }) => {
       setIsSubmitting(false);
     }
   };
+
+  const initials = formData.author
+    ? formData.author.slice(0, 2).toUpperCase()
+    : "Q";
+
   return (
-    <div className="quotes-page-main-container">
-      <h1>{mode === "edit" ? "Edit Your Quote" : "Submit a New Quote"}</h1>
-      <p>
-        Share your wisdom with the world. Your quote will be reviewed before
-        going live.
-      </p>
-      <div className="quote-form-container">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <div className="form-group">
-            <label htmlFor="quote" className="label">
-              Your Quote
-            </label>
-            <textarea
-              id="quote"
-              name="quote"
-              rows="4"
-              placeholder="Enter your quote here..."
-              required
-              onChange={handleInputChange}
-              disabled={isSubmitting}
-              value={formData.quote}
-            ></textarea>
-          </div>
-          <div className="author-and-caption-container">
-            <div className="form-group">
-              <label htmlFor="author" className="label">
-                Author Name
-              </label>
-              <input
-                type="text"
-                id="author"
-                placeholder="Your name or Pen name"
-                required
-                onChange={handleInputChange}
-                disabled={isSubmitting}
-                value={formData.author}
-              />
+    <div className="quote-workspace-container">
+      {/* Page Header */}
+      <div className="quotes-header-section">
+        <h1>{isEditMode ? "Edit Insight" : "Write a New Quote"}</h1>
+        <p>Draft your quote, customize background wallpapers, and preview tab displays in real time.</p>
+      </div>
+
+      {/* Left Column: Clean Form Controls */}
+      <div className="workspace-form-column">
+        <form onSubmit={handleSubmit} className="quote-editor-form">
+          
+          {/* Section 1: Author Profile Picture Select */}
+          <div className="form-section-card">
+            <div className="editor-section-header">
+              <h3 className="editor-section-title">1. Author Profile Picture</h3>
+              <p className="editor-section-subtitle">Select a pre-vetted avatar or upload a custom profile portrait.</p>
             </div>
-            <div className="form-group">
-              <label htmlFor="caption" className="label">
-                Caption/Description
-              </label>
-              <input
-                id="caption"
-                type="text"
-                placeholder="Brief description about you"
-                required
-                onChange={handleInputChange}
-                disabled={isSubmitting}
-                value={formData.caption}
-              />
-            </div>
-          </div>
-          {/* <div className="form-group">
-            <label htmlFor="image" className="image-upload-wrapper">
+
+            {/* Scrolling Preset Row with Upload button */}
+            <div className="wallpaper-scroll-row">
+              {/* Hidden file input for uploading custom images */}
               <input
                 type="file"
-                id="image"
+                ref={fileInputRef}
+                style={{ display: "none" }}
                 accept="image/*"
-                className="upload-input"
-                onChange={handleFileChange}
+                onChange={handleCustomImageUpload}
+              />
+              <button
+                type="button"
+                className="upload-thumb-btn"
+                onClick={triggerFileSelect}
                 disabled={isSubmitting}
-              />
+              >
+                <Upload size={18} />
+                <span>Upload</span>
+              </button>
 
-              {imageFile || imageUrl ? (
-                <>
-                  <img
-                    src={imageFile ? URL.createObjectURL(imageFile) : imageUrl}
-                    alt="Uploaded"
-                  />
-                  <div className="edit-overlay">
-                    <FaEdit size={24} />
-                  </div>
-                </>
-              ) : (
+              {imagesList.map((item) => (
                 <div
-                  style={{
-                    textAlign: "center",
-                    lineHeight: "150px",
-                    color: "#999",
-                  }}
-                >
-                  Upload
-                </div>
-              )}
-            </label>
-          </div> */}
-          <div>
-            <div
-              className="image-preview-wrapper"
-              onClick={() => setShowModal(true)}
-              style={{ cursor: "pointer" }}
-            >
-              {imageUrl ? (
-                <div className="image-hover-container">
-                  <img
-                    src={imageUrl}
-                    alt="Selected"
-                    className="image-preview"
-                  />
-                  <div className="image-hover-overlay">
-                    <FaEdit size={20} />
-                  </div>
-                </div>
-              ) : (
-                <div className="upload-placeholder">
-                  <FaEdit size={20} style={{ marginBottom: '8px', opacity: 0.5 }} />
-                  <span>Upload Profile Picture</span>
-                </div>
-              )}
+                  key={item._id}
+                  className={`wallpaper-thumb ${imageUrl === item.imageUrl ? "active" : ""}`}
+                  style={{ backgroundImage: `url(${item.imageUrl})` }}
+                  onClick={() => setImageUrl(item.imageUrl)}
+                />
+              ))}
             </div>
-            {showModal && (
-              <ImageGalleryModal
-                onClose={() => setShowModal(false)}
-                onSelect={(url) => setImageUrl(url)}
-              />
-            )}
           </div>
-          <label htmlFor="social" className="label">
-            Social Media Links
-          </label>
-          <div className="author-and-caption-container">
+
+          {/* Section 2: Quote Content */}
+          <div className="form-section-card">
+            <div className="editor-section-header">
+              <h3 className="editor-section-title">2. Compose Quote</h3>
+              <p className="editor-section-subtitle">Keep it clean and inspirational.</p>
+            </div>
             <div className="form-group">
-              <div className="social-input">
-                <FaFacebook className="social-icon icon-facebook" />
+              <textarea
+                id="quote"
+                className="premium-textarea"
+                maxLength={500}
+                placeholder="Type your quote here... (maximum 500 characters)"
+                required
+                onChange={handleInputChange}
+                disabled={isSubmitting}
+                value={formData.quote}
+              />
+              <div className="char-counter">{formData.quote.length} / 500 characters</div>
+            </div>
+          </div>
+
+          {/* Section 3: Creator Details */}
+          <div className="form-section-card">
+            <div className="editor-section-header">
+              <h3 className="editor-section-title">3. Author Profile details</h3>
+              <p className="editor-section-subtitle">Identify the original creator of this quote.</p>
+            </div>
+
+            <div className="inputs-row">
+              <div className="form-group">
+                <label htmlFor="author" className="settings-field-label">Author Name</label>
+                <input
+                  type="text"
+                  id="author"
+                  className="settings-field-input"
+                  placeholder="E.g. Elena Vance"
+                  required
+                  onChange={handleInputChange}
+                  disabled={isSubmitting}
+                  value={formData.author}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="caption" className="settings-field-label">Creator Tagline/Bio</label>
+                <input
+                  type="text"
+                  id="caption"
+                  className="settings-field-input"
+                  placeholder="E.g. UI/UX Designer"
+                  required
+                  onChange={handleInputChange}
+                  disabled={isSubmitting}
+                  value={formData.caption}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4: Verified Connections */}
+          <div className="form-section-card">
+            <div className="editor-section-header">
+              <h3 className="editor-section-title">4. Verify Creator Social Links</h3>
+              <p className="editor-section-subtitle">Link your social media to verify creator ownership.</p>
+            </div>
+
+            <div className="social-inputs-grid">
+              <div className="premium-social-input">
+                <Facebook size={16} className="social-input-icon icon-facebook" />
                 <input
                   type="text"
                   id="facebook"
-                  placeholder="Facebook Profile URL"
+                  placeholder="Facebook URL"
+                  value={formData.socialLinks.facebook || ""}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.facebook || ""}
                 />
               </div>
-              <div className="social-input">
-                <FaInstagram className="social-icon icon-instagram" />
+              <div className="premium-social-input">
+                <Instagram size={16} className="social-input-icon icon-instagram" />
                 <input
                   type="text"
                   id="instagram"
-                  placeholder="Instagram Profile URL"
+                  placeholder="Instagram URL"
+                  value={formData.socialLinks.instagram || ""}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.instagram || ""}
                 />
               </div>
-              <div className="social-input">
-                <FaLinkedinIn className="social-icon icon-linkedin" />
+              <div className="premium-social-input">
+                <Linkedin size={16} className="social-input-icon icon-linkedin" />
                 <input
                   type="text"
                   id="linkedin"
-                  placeholder="LinkedIn Profile URL"
+                  placeholder="LinkedIn URL"
+                  value={formData.socialLinks.linkedin || ""}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.linkedin || ""}
                 />
               </div>
-            </div>
-            <div className="form-group">
-              <div className="social-input">
-                <FaXTwitter className="social-icon icon-twitter" />
+              <div className="premium-social-input">
+                <Twitter size={16} className="social-input-icon icon-twitter" />
                 <input
                   type="text"
                   id="twitter"
-                  placeholder="Twitter Profile URL"
+                  placeholder="Twitter / X URL"
+                  value={formData.socialLinks.twitter || ""}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.twitter || ""}
                 />
               </div>
-              <div className="social-input">
-                <BsGlobeCentralSouthAsia className="social-icon icon-website" />
+              <div className="premium-social-input" style={{ gridColumn: "1 / -1" }}>
+                <Globe size={16} className="social-input-icon icon-website" />
                 <input
                   type="text"
                   id="website"
-                  placeholder="Website Profile URL"
+                  placeholder="Website / Portfolio URL"
+                  value={formData.socialLinks.website || ""}
                   onChange={handleInputChange}
                   disabled={isSubmitting}
-                  value={formData.socialLinks.website || ""}
                 />
               </div>
             </div>
           </div>
-          <div className="button-container">
-            <button
-              type="submit"
-              className="authButton"
-              disabled={isSubmitting}
-            >
-              {isSubmitting
-                ? mode === "edit"
-                  ? "Updating..."
-                  : "Submitting..."
-                : mode === "edit"
-                  ? "Update Quote"
-                  : "Submit Quote"}
-            </button>
-          </div>
+
+          {/* Submit Action */}
+          <button type="submit" className="submit-quote-action-btn" disabled={isSubmitting}>
+            {isSubmitting
+              ? "Publishing Insight..."
+              : isEditMode
+              ? "Update Quote"
+              : "Submit Quote for Review"}
+          </button>
+
         </form>
       </div>
-      <div className="quote-form-container info-container">
-        <div className="info-card">
-          <FaInfoCircle style={{ color: "#1E3A8A", fontSize: "32px" }} />
-          <h5 className="info-heading">Review Process</h5>
-          <p className="info-text">
-            Your quote will be reviewed by our team within 24-48 hours. We check
-            for quality, originality, and appropriateness. You'll receive a
-            notification once your quote is approved and published.
+
+      {/* Right Column: Live Mockup Card Preview */}
+      <div className="workspace-preview-column">
+        <span className="column-label">Live Preview Mockup</span>
+        <div className="mockup-card-container">
+          <div className="mockup-card-overlay" />
+          <div className="mockup-quote-mark">“</div>
+          <p className="mockup-quote-text" style={{ color: "#ffffff" }}>
+            {formData.quote || "The simple things are also the most extraordinary things, and only the wise can see them."}
           </p>
+          
+          <div className="mockup-footer">
+            <div className="mockup-profile">
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt=""
+                  className="mockup-avatar"
+                />
+              ) : (
+                <div className="mockup-avatar">
+                  {initials}
+                </div>
+              )}
+              <div className="mockup-profile-info">
+                <span className="mockup-author" style={{ color: "#ffffff" }}>
+                  {formData.author || "Santiago"}
+                </span>
+                <span className="mockup-caption" style={{ color: "rgba(255, 255, 255, 0.75)" }}>
+                  {formData.caption || "Andalusian Shepherd"}
+                </span>
+              </div>
+            </div>
+
+            <div className="mockup-socials">
+              {Object.entries(formData.socialLinks).map(([platform, value]) => {
+                if (!value) return null;
+                const Icon = socialIcons[platform];
+                return (
+                  <Icon
+                    key={platform}
+                    size={14}
+                    className="mockup-social-icon"
+                    style={{ color: "#ffffff" }}
+                  />
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Quality Banner */}
+        <div className="info-card">
+          <Info size={20} className="info-icon" />
+          <div>
+            <h5 className="info-heading">Vetting Guidelines</h5>
+            <p className="info-text">
+              Quotes are reviewed for formatting, spelling accuracy, and duplicate checks. Verified socials verify creator authenticity.
+            </p>
+          </div>
         </div>
       </div>
     </div>

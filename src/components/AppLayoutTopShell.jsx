@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { FaBars, FaQuoteLeft } from "react-icons/fa";
+import { Menu } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const ApplayoutTopShell = ({ toggleSidebar }) => {
@@ -11,11 +11,11 @@ const ApplayoutTopShell = ({ toggleSidebar }) => {
     <div className="applayout-top-shell">
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <button className="menu-toggle" onClick={toggleSidebar}>
-          <FaBars />
+          <Menu size={20} />
         </button>
         <p className="logo">
-          <FaQuoteLeft className="logo-icon" />
-          QuoteShare
+          <img src="/sina-quotes-logo.svg" alt="Sina Quotes Logo" className="logo-icon" />
+          SINA Quotes
         </p>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>

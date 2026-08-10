@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { Sun, Moon } from "lucide-react";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    localStorage.getItem("theme") || "light"
   );
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const ThemeToggle = () => {
 
   return (
     <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle Theme">
-      {theme === "light" ? <FaMoon /> : <FaSun />}
+      {theme === "light" ? <Moon size={16} /> : <Sun size={16} />}
     </button>
   );
 };

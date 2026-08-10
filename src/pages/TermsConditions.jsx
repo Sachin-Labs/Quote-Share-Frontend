@@ -5,9 +5,9 @@ const TermsConditions = () => {
     <div className="terms-conditions-container">
       <h1>Terms and Conditions</h1>
       <p>Effective Date: 18th July 2025</p>
-      <p>Application Name: Quote Share</p>
+      <p>Application Name: SINA Quotes</p>
       <p>
-        Welcome to Quote Share! By accessing or using our platform
+        Welcome to SINA Quotes! By accessing or using our platform
         (including our website and browser extension), you agree to be bound by
         the following terms and conditions.
       </p>
@@ -42,7 +42,7 @@ const TermsConditions = () => {
           You retain ownership of the quotes, captions, and images you post.
         </li>
         <li>
-          By posting content, you grant quote share a non-exclusive,
+          By posting content, you grant SINA Quotes a non-exclusive,
           royalty-free license to display and distribute your content within our
           platform and browser extension.
         </li>
@@ -66,7 +66,7 @@ const TermsConditions = () => {
       </p>
       <h3>7. Limitation of Liability</h3>
       <p>
-        Quote share is not liable for any indirect, incidental, or
+        SINA Quotes is not liable for any indirect, incidental, or
         consequential damages related to your use of the platform.
       </p>
       <h3>8. Changes to Terms</h3>

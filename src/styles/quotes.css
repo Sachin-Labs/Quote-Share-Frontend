@@ -1,165 +1,395 @@
-.quotes-page-main-container {
+.quote-workspace-container {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+  align-items: start;
+}
+
+.quotes-header-section {
+  grid-column: 1 / -1;
+  position: sticky;
+  top: -32px; /* Pull up to sit flush against the top navigation shell */
+  z-index: 100;
+  background-color: var(--t-canvas);
+  padding: 32px 0 16px 0; /* Add top padding to fill the offset gap */
+  border-bottom: 1px solid var(--t-line);
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.quotes-header-section h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--t-bright);
+  margin-bottom: 6px;
+}
+
+.quotes-header-section p {
+  font-size: 14px;
+  color: var(--t-subtle);
+  margin: 0;
+}
+
+/* Sticky Left Preview Column */
+.workspace-preview-column {
+  position: sticky;
+  top: 106px; /* Aligns below the sticky page header */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.column-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--t-muted);
+  letter-spacing: 0.05em;
+}
+
+/* Premium Preview Card */
+.mockup-card-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--t-line);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow: var(--shadow-modal);
+}
+
+.mockup-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65));
+  z-index: 1;
+}
+
+.mockup-quote-mark {
+  font-family: Georgia, serif;
+  font-size: 80px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.15);
+  position: absolute;
+  top: 10px;
+  left: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mockup-quote-text {
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 85%;
+  margin: 0;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.mockup-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.mockup-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mockup-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background-color: var(--t-accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--t-accent);
+}
+
+.mockup-profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 150px;
+}
+
+.mockup-author {
+  font-size: 12px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mockup-caption {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mockup-socials {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mockup-social-icon {
+  color: rgba(255, 255, 255, 0.85);
+  transition: transform 0.15s ease;
+}
+
+/* Info Card Banner */
+.info-card {
+  background-color: var(--t-surface);
+  border: 1px solid var(--t-line);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  box-shadow: var(--shadow-card);
+}
+
+.info-icon {
+  color: var(--t-accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.info-heading {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--t-bright);
+  margin-bottom: 4px;
+}
+
+.info-text {
+  font-size: 12px;
+  color: var(--t-subtle);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Form Panel Column */
+.workspace-form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+.quote-editor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section-card {
+  background-color: var(--t-surface);
+  border: 1px solid var(--t-line);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.editor-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.editor-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--t-bright);
+  margin: 0;
+}
+
+.editor-section-subtitle {
+  font-size: 12.5px;
+  color: var(--t-subtle);
+  margin: 0;
+}
+
+/* Presets Wallpaper Scroll Strip */
+.wallpaper-scroll-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  scrollbar-width: thin;
+  width: 100%;
+  max-width: 100%;
+}
+
+.wallpaper-scroll-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.wallpaper-scroll-row::-webkit-scrollbar-thumb {
+  background-color: var(--t-line);
+  border-radius: 3px;
+}
+
+.wallpaper-thumb {
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  background-size: cover;
+  background-position: center;
+}
+
+.wallpaper-thumb:hover {
+  transform: translateY(-2px);
+  border-color: var(--t-edge);
+}
+
+.wallpaper-thumb.active {
+  border-color: var(--t-accent);
+  box-shadow: 0 0 0 2px var(--t-accent-soft);
+  transform: translateY(-2px);
+}
+
+.upload-thumb-btn {
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--t-line);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 60px;
-  /* Reduced extreme bottom padding */
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  background-color: var(--t-canvas);
+  color: var(--t-dim);
+  font-size: 11px;
+  font-weight: 600;
+  gap: 6px;
+  transition: all 0.15s ease;
 }
 
-.quotes-page-main-container h1 {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 8px;
+.upload-thumb-btn:hover {
+  border-color: var(--t-edge);
+  color: var(--t-bright);
+  background-color: var(--t-raised);
 }
 
-.quotes-page-main-container p {
-  color: var(--t-subtle);
-  /* margin-bottom: 32px; */
-}
-
-.quote-form-container {
-  background-color: var(--t-surface);
-  border-radius: var(--radius-xl);
-  border: 1px solid var(--t-line);
-  padding: 40px;
+/* Premium Textarea & inputs */
+.premium-textarea {
   width: 100%;
-  max-width: 700px;
+  min-height: 110px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--t-line);
+  background-color: var(--t-canvas);
+  color: var(--t-bright);
+  font-family: inherit;
+  font-size: 13.5px;
+  resize: vertical;
+  line-height: 1.5;
+  transition: border-color 0.15s ease;
+}
+
+.premium-textarea:focus {
+  outline: none;
+  border-color: var(--t-accent);
+  box-shadow: 0 0 0 2px var(--t-accent-soft);
+}
+
+.char-counter {
+  font-size: 11px;
+  color: var(--t-muted);
+  text-align: right;
+  margin-top: 4px;
+}
+
+.inputs-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  width: 100%;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
   gap: 8px;
 }
 
-textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* Info box redesign */
-.info-container {
-  background-color: var(--t-raised);
-  border: 1px solid var(--t-line);
-  padding: 24px;
-  border-radius: var(--radius-md);
-  margin-top: 40px;
-  /* Separated from form */
-  margin-bottom: 20px;
-}
-
-.info-card {
-  display: flex;
-  gap: 16px;
-}
-
-.info-card svg {
-  font-size: 20px;
-  color: var(--t-dim);
-  flex-shrink: 0;
-}
-
-.info-heading {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  color: var(--t-bright);
-}
-
-.info-text {
-  font-size: 13px;
-  color: var(--t-subtle);
-  line-height: 1.5;
-}
-
-/* Image Upload UI */
-.image-upload-wrapper,
-.image-preview-wrapper {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px dashed var(--t-line);
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--t-surface);
-  margin: 0 auto 24px;
-}
-
-.image-upload-wrapper:hover {
-  border-color: var(--t-edge);
-}
-
-.upload-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--t-muted);
-  text-align: center;
-  padding: 16px;
-  line-height: 1.4;
-}
-
-.image-hover-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.image-preview {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.image-hover-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.image-hover-container:hover .image-hover-overlay {
-  opacity: 1;
-}
-
-/* Row alignment */
-.author-and-caption-container {
+/* Premium Social inputs grid */
+.social-inputs-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 
-.social-input {
+.premium-social-input {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 4px 0;
-  transition: transform 0.2s ease;
 }
 
-.social-input:focus-within {
-  transform: translateX(4px);
+.premium-social-input input {
+  width: 100%;
+  height: 38px;
+  padding: 0 12px 0 38px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--t-line);
+  background-color: var(--t-canvas);
+  color: var(--t-bright);
+  font-size: 13px;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
 }
 
-.social-icon {
-  font-size: 24px;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
+.premium-social-input input:focus {
+  outline: none;
+  border-color: var(--t-accent);
+}
+
+.social-input-icon {
+  position: absolute;
+  left: 12px;
+  pointer-events: none;
 }
 
 .icon-facebook { color: #1877F2; }
@@ -172,26 +402,106 @@ textarea {
 [data-theme='dark'] .icon-instagram { color: #ff6b88; }
 [data-theme='dark'] .icon-linkedin { color: #3b9fff; }
 
-.authButton {
-  /* Primary button style reuse */
+/* Glowing Submit Button */
+.submit-quote-action-btn {
+  height: 44px;
   width: 100%;
-  margin-top: 16px;
+  background-color: var(--t-accent);
+  color: var(--t-accent-fg);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+  box-shadow: 0 4px 12px rgba(165, 107, 255, 0.2);
+  font-family: inherit;
 }
 
-@media (max-width: 600px) {
-  .quote-form-container {
-    padding: 24px 20px;
+.submit-quote-action-btn:hover {
+  opacity: 0.9;
+}
+
+.submit-quote-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsiveness overrides */
+@media (max-width: 1200px) {
+  .quote-workspace-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    padding: 0 12px 32px;
   }
 
-  .author-and-caption-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  .quotes-header-section {
+    position: static !important;
+    padding: 12px 0;
+    margin-bottom: 16px;
+    border-bottom: none;
+    grid-row: 1; /* Page title on top */
+  }
+
+  .workspace-preview-column {
+    position: static !important;
+    padding: 0;
+    gap: 16px;
+    border-bottom: none;
+    grid-row: 2; /* Preview in the middle */
+  }
+
+  .workspace-form-column {
+    grid-row: 3; /* Form controls at the bottom */
   }
 
   .info-card {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    display: none; /* Hide quality banner on mobile to save vertical space */
+  }
+}
+
+@media (max-width: 520px) {
+  .mockup-card-container {
+    padding: 20px;
+  }
+
+  .mockup-quote-mark {
+    font-size: 56px;
+    top: 6px;
+    left: 16px;
+  }
+
+  .mockup-quote-text {
+    font-size: 13.5px;
+    line-height: 1.5;
+    max-width: 90%;
+  }
+
+  .mockup-footer {
+    bottom: 16px;
+    left: 20px;
+    right: 20px;
+  }
+
+  .mockup-avatar {
+    width: 26px;
+    height: 26px;
+  }
+
+  .mockup-author {
+    font-size: 11px;
+  }
+
+  .mockup-caption {
+    font-size: 9.5px;
+  }
+
+  .inputs-row, .social-inputs-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .form-section-card {
+    padding: 16px;
   }
 }

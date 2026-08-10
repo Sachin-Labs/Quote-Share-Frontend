@@ -5,7 +5,7 @@ const PrivacyPage = () => {
     <div className="terms-conditions-container">
       <h1>Privacy Policy</h1>
       <p>Effective Date: 18th July 2025</p>
-      <p>Application Name: Quote Share</p>
+      <p>Application Name: SINA Quotes</p>
       <p>
         Your privacy is important to us. This policy describes how we collect,
         use, and protect your personal information.
@@ -70,7 +70,7 @@ const PrivacyPage = () => {
       <h3>9. Contact Us</h3>
       <p>
         For questions or concerns about your data, email us at
-        support@quoteshare.com.
+        support@sina-quotes.com.
       </p>
     </div>
   );
